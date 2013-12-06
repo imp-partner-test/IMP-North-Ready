@@ -400,6 +400,8 @@ and returns only basic information as response. The current expiration time is 3
 # Body Parameters
 Selection criteria (specified in the request body): 
 
+- `maxRoutingResponses' - maximal number of routes in the response. ?VMZ needs this in the request. Do we leave it configurable?
+
 - `origin`: start point specified by a geo location 
   (addresses can be converted into geo locations by means of "GET V0/Resources/GeoLocations")
 
