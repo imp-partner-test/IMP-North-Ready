@@ -384,8 +384,8 @@ GET /V0/Resources/EVCharging/Stations/{stationId}
 
 --
 Intermodal Route Planner
-Intermodal Route Planner interfaces replace the former (Modal) Route Planner ("POST /V0/TripProposals/", etc.)
-Interfaces listed in this section provide a traveller with route using several modes of transport: Public Transport (bus, train, metro, etc.) and Individual Transport (car, walking, bicycle, etc.) 
+Intermodal Route Planner interfaces replace the former (Modal) Route Planner (Interfaces "POST /V0/TripProposals/", etc.)
+Interfaces listed in this section provide a traveler with route using several modes of transport: Public Transport (bus, train, metro, etc.) and Individual Transport (car, walking, bicycle, etc.) 
 
 --
 
@@ -394,7 +394,7 @@ Finds trip proposals by specified trip criteria and returns the basic informatio
 NOTE: this is a POST request, it stores calculated trip proposals with all detailed information internally for a certain time
 and returns only basic information as response. The current expiration time is 30 minutes,
 afterwards stored proposals expire and details are no longer available.
-To get more details about a certain proposal use "GET /V0/TripProposals/{proposalId}".
+To get more details about a certain proposal use "GET /V1/TripProposals/{proposalId}".
 
 
 # Query Parameters
@@ -403,33 +403,26 @@ To get more details about a certain proposal use "GET /V0/TripProposals/{proposa
 # Body Parameters
 Selection criteria (specified in the request body): 
 
-- `origin`: start point specified by a geo location ?The same as in V0?
+- `origin`: start point specified by a geo location
   (addresses can be converted into geo locations by means of "GET V0/Resources/GeoLocations")
 
-- `destination`: end point specified by a geo location ?The same as in V0?
+- `destination`: end point specified by a geo location
 
-- `time` either orgin or destination might specify a time ?The same as in V0?
+- `time` either orgin or destination might specify a time
 
-- `viaPoints`: list of geo locations that the route should use ?The same as in V0?
+- `viaPoints`: list of geo locations that the route should use
 
-- `avoidPoints`: list of geo locations that the route should avoid ?Not yet implemented in VMZ?
+- `avoidPoints`: list of geo locations that the route should avoid (Not yet implemented)
 
-- `costFunction`: list of cost factors (such as Distance, Duration, ...), each with a percentual weight. "CostFunction" : { "Duration": Percentage, "Distance": Percentage, "Price": Percentage, "Emission": Percentage} currently implemented, Speed, Delay, Other not yet implemented but planned}
+- `costFunction`: list of cost factors (such as Distance, Duration, ...), each with a percentual weight. 100% - constraint must be fulfilled, 0% constraint is not important.
+"CostFunction" : { "Duration": Percentage, "Distance": Percentage, "Price": Percentage, "Emission": Percentage} currently implemented, Speed, Delay, Other are not yet implemented but planned}
 
-- `trafficTypes`: list of either of Walk, Bike, Car, Taxi, Metro, CityTrain, Train, Bus, Tram, RegioTrain, Ferry, Other, Unknown
+- `trafficTypes`: list of either of Walk, Bike, Car, Taxi, Metro, CityTrain, Train, Bus, Tram, RegioTrain, Ferry, Other, Unknown ?VMZ responce does not react on it?
 
-- `routingConstraints`: list of constraints to be taken into account for various traffic types, specified by min/max values. For example Walk max 1000m. RoutingConstraintType = ENUM { "Duration", "Distance", "Price", "Eco", "Speed", "Delay", "Other" }
-?usage of own car, own bicycle,..?
+- `routingConstraints`: list of constraints to be taken into account for various traffic types, specified by min/max values. RoutingConstraintType = ENUM { "Duration", "Distance", "Price", "Eco", "Speed", "Delay", "Other" } 
+Example: (“Walk”, "Distance", min=0 m, max=500 m) AND (“Metro”, "Duration", min=0 min, max=100 min)
 
-- `maxRoutingResponses` - maximal number of routes in the response. ?VMZ needs this in the request. Do we leave it configurable?
-
-- `detailState` - detail state of the response. detailState = “High”, “LOW” – in VMZ. ?VMZ needs this in the request. Do we leave it configurable?
-
-- `userId`: user that requests a trip ?
-
-- `maxNumberOfChanges`: maximal number of transport changes
-
-- `weather`: weather option ?
+- `useTrafficSituation` : boolean
 
 
 
@@ -451,7 +444,7 @@ costs | Object | {"distanceFromOrigin":Distance, "duration":Duration, "price":Mo
 Some parts of the data structure might be omitted because the information is not available.
 
 
-POST /V0/TripProposals
+POST /V1/TripProposals
 > Content-Type: application/json
 > Accept: application/json
 { 
@@ -464,10 +457,11 @@ POST /V0/TripProposals
         "time": null
         },
     "viaPoints": [],
+    "avoidPoints": [],
     "costFunctions": [],
-    "trafficTypes": [ "Car", "Walk" ],
+    "trafficTypes": [ "Metro", "CityTrain", "Walk" ],
     "routingConstraints": [],
-    "userId": "4711/10" 
+    "useTrafficSituation" : true
 }
 < 200
 < Content-Type: application/json
