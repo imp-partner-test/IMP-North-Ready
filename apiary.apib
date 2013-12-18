@@ -412,15 +412,18 @@ Selection criteria (specified in the request body):
 
 - `viaPoints`: list of geo locations that the route should use
 
-- `avoidPoints`: list of geo locations that the route should avoid (Not yet implemented)
-
 - `costFunction`: list of cost factors (such as Distance, Duration, ...), each with a percentual weight. 100% - constraint must be fulfilled, 0% constraint is not important.
-"CostFunction" : { "Duration": Percentage, "Distance": Percentage, "Price": Percentage, "Emission": Percentage} currently implemented, Speed, Delay, Other are not yet implemented but planned}
+"CostFunction" : { "Duration": Percentage, "Distance": Percentage, "Price": Percentage, "Emission": Percentage} currently implemented, Speed, Delay, Other are not yet implemented but planned}.
+Example in VMZ request: <weightedCostsType costsType="Duration" weight="100.0"/> <weightedCostsType costsType="Eco" weight="10.0"/> <weightedCostsType costsType="Distance" weight="10.0"/> <weightedCostsType costsType="Price" weight="10.0"/>
 
-- `trafficTypes`: list of either of Walk, Bike, Car, Taxi, Metro, CityTrain, Train, Bus, Tram, RegioTrain, Ferry, Other, Unknown ?VMZ responce does not react on it?
+- `trafficTypes`: list of either of Walk, Bike, Car, Taxi, Metro, CityTrain, Train, Bus, Tram, RegioTrain, Ferry, Other, Unknown
 
 - `routingConstraints`: list of constraints to be taken into account for various traffic types, specified by min/max values. RoutingConstraintType = ENUM { "Duration", "Distance", "Price", "Eco", "Speed", "Delay", "Other" } 
 Example: (“Walk”, "Distance", min=0 m, max=500 m) AND (“Metro”, "Duration", min=0 min, max=100 min)
+Example from VMZ: <ns3:constraint xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="ns13:RoutingConstraint" type="Distance">
+						<maxValue xmlns:ns15="http://vmzberlin.com/util/xsd/quantifiedvalue" xsi:type="ns15:LengthValue" value="1000.0" unit="Meter" quantity="Length"/>
+						<trafficType>Walk</trafficType>
+					</ns3:constraint>
 
 - `useTrafficSituation` : boolean
 
@@ -434,12 +437,12 @@ The data structure of a trip proposal with basic information contains the follow
 
 attribute | json data type | comments
 --- | --- | ---
-url | URI  | URI of this ressourse
+url | URI  | URI for detaild information
 origin | Object | start point of the trip {"location":Location, "address":Address, "time":Time}
 destination | Object | end point of the trip {"location":Location, "address":Address, "time":Time}
 trafficTypes | Array of Enums | list of values from ENUM { "Walk", "Bike", "Car", "Taxi", "Metro", "CityTrain", "Train", "Bus", "Tram", "RegioTrain", "Ferry", "Other" } 
 description | String |
-costs | Object | {"distanceFromOrigin":Distance, "duration":Duration, "price":Money, "emission":MassUnit}.
+costs | Object | {"distanceFromOrigin":Distance, "duration":Duration, "price":Money, "emission":MassUnit}
 
 Some parts of the data structure might be omitted because the information is not available.
 
@@ -449,15 +452,14 @@ POST /V1/TripProposals
 > Accept: application/json
 { 
     "origin": { 
-        "location": { "longitude": 13.377683, "latitude": 52.509166, "system": "WGS84" }, 
-        "time": "2013-07-23T15:10:00+0200"
+        "location": { "longitude": 13.392155, "latitude": 52.453603, "system": "WGS84" }, 
+        "time": "2014-01-20T19:00:11+0200"
         },
     "destination": { 
-        "location": { "longitude": 13.384160041809082, "latitude": 52.5100212097168, "system": "WGS84" },
+        "location": { "longitude": 13.448292, "latitude": 52.528976, "system": "WGS84" },
         "time": null
         },
     "viaPoints": [],
-    "avoidPoints": [],
     "costFunctions": [],
     "trafficTypes": [ "Metro", "CityTrain", "Walk" ],
     "routingConstraints": [],
@@ -469,80 +471,92 @@ POST /V1/TripProposals
         "url": "TripProposals/257918",
         "origin": {
             "location": {
-                "latitude": 52.5091506,
-                "longitude": 13.3776613,
+                "latitude": 52.453603,
+                "longitude": 13.392155,
                 "system": "WGS_84"
             },
             "address": null,
-            "time": "2013-07-23T15:10:00+0200"
+            "time": "2014-01-20T19:00:11+0200"
         },
         "destination": {
             "location": {
-                "latitude": 52.5100021,
-                "longitude": 13.3841612,
+                "latitude": 52.528976,
+                "longitude": 13.448292,
                 "system": "WGS_84"
             },
             "address": null,
-            "time": "2013-07-23T15:16:09+0200"
+            "time": "2014-01-20T19:51:00+0200"
         },
         "trafficTypes": [
-            "Walk"
+            "Metro", "CityTrain", "Walk"
         ],
         "description": null,
         "costs": {
             "distanceFromOrigin": {
                 "unit": "Meter",
-                "value": 505
+                "value": 14934.23107925108
             },
             "duration": {
                 "unit": "Second",
-                "value": 369
+                "value": 2760.0
             },
-            "price": null,
-            "emission": null
+            "price": {
+                "unit": "EuroCent",
+                "value": 260.0
+            },
+            "emission": {
+                "unit": "Gram",
+                "value": 314.5303148227748
+            }
         }
     },
     {
         "url": "TripProposals/257920",
         "origin": {
             "location": {
-                "latitude": 52.50917053222656,
-                "longitude": 13.377630233764648,
+                "latitude": 52.453603,
+                "longitude": 13.392155,
                 "system": "WGS_84"
             },
             "address": null,
-            "time": "2013-11-19T15:10:28+0100"
+            "time": "2014-01-20T19:00:11+0100"
         },
         "destination": {
             "location": {
-                "latitude": 52.5100212097168,
-                "longitude": 13.384160041809082,
+                "latitude": 52.528976,
+                "longitude": 13.448292,
                 "system": "WGS_84"
             },
             "address": null,
-            "time": "2013-11-19T15:11:28+0100"
+            "time": "2014-01-20T19:50:31+0100"
         },
         "trafficTypes": [
-            "Car"
+            "Walk", "Car"
         ],
-        "description": "@52.50916671752929,13.37768268585205:@52.51002120971681,13.384160041809082",
+        "description": null,
         "costs": {
             "distanceFromOrigin": {
                 "unit": "Meter",
-                "value": 503
+                "value": 13146.0
             },
             "duration": {
                 "unit": "Second",
-                "value": 98
+                "value": 2444.0
             },
-            "price": null,
-            "emission": null
+            "price": {
+                "unit": "Euro",
+                "value": 8.809166666666668
+            },
+            "emission": {
+                "unit": "Gram",
+                "value": 2163.056
+            }
         }
     }
 ] 
 
 # General Description
-Get details about a specific trip proposal determined by {proposalId}. PLEASE NOTE: Trip proposals must be stored internally by means of "POST /V0/TripProposals" before referencing a specific proposal using "GET /V0/TripProposals/{proposalId}".
+Get details about a specific trip proposal determined by {proposalId}. PLEASE NOTE: Trip proposals must be stored internally by means of "POST /V1/TripProposals" before referencing a specific proposal using "GET /V1/TripProposals/{proposalId}".
 The current expiration time is 30 minutes. Afterwards stored proposals expire and details are no longer available. 
 
 # Query Parameters
@@ -562,7 +576,7 @@ guidingPoints | Array of Objects  | [{ "description": String, "location": TimedL
 
 PLEASE NOTE: The "distanceFromOrigin"-value in the "costs" of a guidingPoint now counts the distance from guidingPoint to guidingPoint; the misleading name will be replaced soon. (In the past, the distanceFromOrigin-value accumulated the distance from the beginning of the trip.) 
   
-GET /V0/TripProposals/{proposalId}
+GET /V1/TripProposals/{proposalId}
 < 200
 < Content-Type: application/json
 {
@@ -691,6 +705,9 @@ GET /V0/TripProposals/{proposalId}
                     "operator": null
                 }
             ]
+        }
+        {
+            "segmentId": "2"
         }
     ]
 }
