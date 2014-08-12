@@ -70,7 +70,7 @@ The data structure contains the following attributes:
 
 attribute | json data type | comments
 --- | --- | ---
-operator | String |  (DriveNow, Car2Go_Berlin, NextBike, CallABike)
+operator | String |  a single operator id. Example values: Car2Go_Berlin, DriveNow, NextBike, CallABike, .... (Should be unique and independent of the service category)
 description | String |  ...
 serviceCategory |ENUM | IMP service categories "CarSharing", "BikeSharing", smth. else?
 businessBoundary | Object | business area specified as MultyPolygon conform to the following GeoJSON Format Specification: http://geojson.org/geojson-spec.html
