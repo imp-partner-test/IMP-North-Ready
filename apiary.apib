@@ -63,8 +63,8 @@ Get WMS PNG file for carsharing for a specific date, a specific bounding box (pl
 
 # Group Business Area Info
 
-## Business Area Info [/imp-endpoint/api/V1/Info/BusinessArea?operator={operator}]    
-Business area of a (free-floating) service (cars, bikes, more?) specified by operator. TODO: an new IMP endpoint is needed, to access the operator list of IMP.
+## Business Area Info [/imp-endpoint/api/V1/Info/ServiceOffering/{id}/BusinessArea]    
+Business area of a (free-floating) service (cars, bikes, more?) specified by service offering id.
 
 The data structure contains the following attributes:
 
@@ -77,32 +77,42 @@ businessBoundary | Object | business area specified as MultyPolygon conform to t
 
 ### Getting Business Area [GET]
 
-+ Parameters
-    + operator (required, string, `Car2Go_Berlin`) ... a single operator. Example values: Car2Go_Berlin, DriveNow
-
 
 + Response 200 (application/json)
 
     + Body
-    
+            
             {
-                "operator": "Car2Go_Berlin",
-                "serviceCategory": "CarSharing",
-                "description": "if available" 
-                "businessBoundary":
-                    { 
-                        "type": "MultiPolygon",
-                        "coordinates": [
-                            [[[102.0, 2.0], [103.0, 2.0], [103.0, 3.0], [102.0, 3.0], [102.0, 2.0]]],
-                            [[[100.0, 0.0], [101.0, 0.0], [101.0, 1.0], [100.0, 1.0], [100.0, 0.0]],
-                            [[100.2, 0.2], [100.8, 0.2], [100.8, 0.8], [100.2, 0.8], [100.2, 0.2]]]
-                        ],
-                        "crs": {
-                            "type": "name",
-                            "properties":
-                            { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" }
-                        }
+              "operator": "Car2Go_Berlin",
+              "description": "Wagen zum Gehen ",
+              "serviceCategory": "CarSharing",
+              "businessBoundary": {
+                "disjunctedBoundary": {
+                  "type": "MultiPolygon",
+                  "coordinates": [
+                  [[[52.53996,12.977235],[52.540586,12.977782],[52.541037,12.977782],[52.541905,12.977793],[52.541924,12.978501],[52.541885,12.978995]],
+                      [[52.550631,13.29696],[52.550729,13.297985],[52.55021,13.298113],[52.550135,13.297314],[52.550178,13.297051],[52.550631,13.29696]]]
+                      ],
+                  "crs": {
+                    "type": "name",
+                    "properties": {
+                      "name": "WGS84"
                     }
+                  }
+                },
+                "negatedBoundary": {
+                  "type": "MultiPolygon",
+                  "coordinates": [
+                  [[[52.476409,13.366665],[52.476377,13.366386],[52.475619,13.366161],[52.475256,13.366123],[52.475158,13.366236],[52.475164,13.366413],[52.475275,13.366488],[52.476409,13.366665]],
+                      [[52.530452,13.314314],[52.530347,13.313885],[52.535359,13.312082],[52.537317,13.326759],[52.536821,13.327746]]]
+                      ],
+                  "crs": {
+                    "type": "name",
+                    "properties": {
+                      "name": "WGS84"
+                    }
+                  }
                 }
+              }
             }
 
