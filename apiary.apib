@@ -64,15 +64,15 @@ Get WMS PNG file for carsharing for a specific date, a specific bounding box (pl
 # Group Business Area Info
 
 ## Business Area Info [/imp-endpoint/api/V1/Info/ServiceOffering/{id}/BusinessArea]    
-Business area of a (free-floating) service (cars, bikes, more?) specified by service offering id.
+Business area of a (free-floating) service (cars, bikes) specified by service offering id.
 
 The data structure contains the following attributes:
 
-attribute | json data type | comments
+Attribute | JSON Data Type | Comments
 --- | --- | ---
-operator | String |  a single operator id. Example values: Car2Go_Berlin, DriveNow, NextBike, CallABike, .... (Should be unique and independent of the service category)
+operator | String |  operator id. Example values: Car2Go_Berlin, DriveNow, NextBike, CallABike etc
 description | String |  ...
-serviceCategory |ENUM | IMP service categories "CarSharing", "BikeSharing", smth. else?
+serviceCategory |ENUM | IMP service categories "CarSharing", "BikeSharing", etc
 businessBoundary | Object | business area specified as MultyPolygon conform to the following GeoJSON Format Specification: http://geojson.org/geojson-spec.html
 
 ### Getting Business Area [GET]
