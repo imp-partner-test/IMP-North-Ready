@@ -66,7 +66,8 @@ Get WMS PNG file for carsharing for a specific date, a specific bounding box (pl
 This is a group of all parking related rest resources. Parking Garages & On-street Paring Vacancies
 
 ## On-street Parking Vacancies with Basic Info [/imp-endpoint/api/V1/Resources/Parking/OnStreetVacancies?lat={lat}&lng={lng}&radius={radius}?size={size}&unit={unit}]    
-This collection contains a list of all on-street vacansies in an area of interest specified by query parameters together with an URI to acquire more details about a specific vacancy. 
+This collection contains a list of all on-street vacansies in an area of interest specified by query parameters together with an URI to acquire more details about a specific vacancy.
+TODO: the list contains only vacancies (FREE parking slots/spots)
 Note: The area of interest can be defined as:
 
 * a bounding circle (lat={lat}&lng={lng}&radius={radius})
@@ -74,6 +75,7 @@ Note: The area of interest can be defined as:
 
 The If-Modified-Since (optional) can be set to a specific date-time in order to request only resources modified after a particular date-time.
 Date time in HTTP date format for e.g. Wed, 09 Apr 2008 23:55:38 GMT
+TODO: Does not make sense now, but maybe in the future..
 
 The data structure of the response contains the following attributes:
 
@@ -83,15 +85,19 @@ metadata | Object | List of service providers and the last update times and fail
 --- | --- | ---
 resources | Array | Array of resources within the search area
 --- | --- | ---
-actions | Array | List of available actions on this resource (book, cancel, etc.)
-id | Number | Internal parking garage identification number
-description | String | Approximate location
-type | String | (="OnStreetParkingVacancy") ?
+actions | Array | List of available actions on this resource (currently empty, in the future can be subscribe for changes...)
+id | Number | Internal parking slot/spot identification number
+description | String | description
+type | String | (="OnStreetParkingVacancy" or similar) TODO
 uri | URI | URI to request more details
 location | Object | Standard WGS 84 for polar coordinates { "latitude":Number, "longitude":Number, "system": ENUM{"WGS_84","GK4","ETRS89",...}  } 
 provider | String | Parking service provider (usually equals operator)
-availability | Double | Availability in percentage
 operator | String | Parking space operator (usually equals provider)
+category | ENUM | public, resident, handicapped
+
+TODO: The following parameters are available in parking garages and are to be discussed:
+
+availability | Double | Availability in percentage
 totalnumber | Object | Number of lots for different categories { "handicappedOnly":Int, "womenOnly":Int, "others":Int }
 lottype | Enum | Type of garage {"Parkhaus", "Parkzone", "Tiefgarage", "Parkplatz"} 
 modFlag | Enum | Type of modification to resource [New / Modified / Relocated / Deleted]. This attribute is present only when the If-Modified-Sinceodified-Since header is passed in the request 
@@ -105,8 +111,8 @@ Parts of the data structure might be omitted if the information is not available
     + lat (string, `52.52`) ... String `lat` latitude value. Has example value.
     + lng (string, `13.39`) ... String `lng` longitude value. Has example value.
     + radius (string, `1000`) ... String `radius` radius value. Has example value.
-    + size (string, `2.5`) ... String `size` required size value (car size). Has example value.
-    + unit (string, `m`) ... String `unit` measurement unit for the size value. Has example value.
+    + size (optional, string, `2.5`) ... String `size` required size value (car size). Has example value. If not defined a default value is used
+    + unit (optional, string, `m`) ... String `unit` measurement unit for the size value. Has example value. If not defined a default value is used
     
 + Request
 
@@ -126,58 +132,19 @@ Parts of the data structure might be omitted if the information is not available
             ],
             "resources": [
                 {
-                    "actions": [
-                        {
-                            "name": "consume",
-                            "method": "POST",
-                            "uri": "Resources/Parking/Garages/270113/Process?action=consume"
-                        }
-                    ],
+                    "actions": [],
                     "id": 270113,
-                    "description": "Mitte, Parkhaus Dorotheenstraße",
-                    "type": "ParkingGarage",
-                    "uri": "Resources/Parking/Garages/270113",
+                    "description": "Some description",
+                    "type": "OnStreetParkingVacancy",
+                    "uri": "Resources/Parking/OnStreetVacancies/270113",
                     "location": {
                         "latitude": 52.51908,
                         "longitude": 13.39094,
                         "system": "WGS_84"
                     },
-                    "provider": "vmzParking",
-                    "availability": null,
-                    "operator": "Parkinglot",
-                    "totalnumber": {
-                        "others": 495,
-                        "handicappedOnly": 0,
-                        "womenOnly": 0
-                    },
-                    "lottype": "Tiefgarage"
-                },
-                {
-                    "actions": [
-                        {
-                            "name": "consume",
-                            "method": "POST",
-                            "uri": "Resources/Parking/Garages/270134/Process?action=consume"
-                        }
-                    ],
-                    "id": 270134,
-                    "description": "Mitte, An der Friedrichswerderschen Kirche",
-                    "type": "ParkingGarage",
-                    "uri": "Resources/Parking/Garages/270134",
-                    "location": {
-                        "latitude": 52.515930000000004,
-                        "longitude": 13.39694,
-                        "system": "WGS_84"
-                    },
-                    "provider": "vmzParking",
-                    "availability": null,
-                    "operator": "Parkinglot",
-                    "totalnumber": {
-                        "others": 75,
-                        "handicappedOnly": 0,
-                        "womenOnly": 0
-                    },
-                    "lottype": "Parkplatz"
+                    "provider": "city2.e..",
+                    "operator": "city2.e..",
+                    "category": "handicapped"
                 }
             ]
         }
