@@ -149,3 +149,33 @@ Parts of the data structure might be omitted if the information is not available
                 }
             ]
         }
+
+
+# Group Routing
+This is a group of all routing related rest resources?
+
+## One to many routes [/imp-endpoint/api/V1/TripProposals/IMR]    
+This collection contains trip proposals with basic information for specified trip criteria.
+Note: the trip proposals can be multimodal or intermodal, depending on to which routing service the user is subscribed to.
+Note: the trip proposals one to one or one to many: depending on to which routing service the user is subscribed to?
+The data structure of the response contains the following attributes:
+
+attribute | json data type | comments
+--- | --- | ---
+url | URI | URI to request more details
+origin | Object | start point of the proposed trip
+destination | Object | endpoint of the proposed trip
+trafficTypes | Array | list of traffic types used in the proposed trip. Currently: Bike, Bus, Car, CityTrain, Ferry, Metro, Other, RegioTrain, Unknown, Train, Tram, Walk, UBahn. trafficType Other is used in the segments for car rental/parking
+description | String | 
+costs | Array | list of costs for the proposed trip
+useBikeSharing | Boolean | use bike sharing services for routing [default: false]
+useCarSharing | Boolean | use car sharing services for routing [default: false]
+--- | --- | ---
+ownVehicles | Object | 
+--- | --- | ---
+trafficType | Enum | Own vehicle type - Car / Bike
+useParking | Boolean | Use parking for own vehicle 
+useParkAndRide | Boolean | Use parking and ride for own vehicle 
+
+    
++ Model (application/json)
