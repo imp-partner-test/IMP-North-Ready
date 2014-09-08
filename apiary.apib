@@ -65,7 +65,7 @@ Get WMS PNG file for carsharing for a specific date, a specific bounding box (pl
 # Group Parking
 This is a group of all parking related rest resources. Parking Garages & On-street Paring Vacancies
 
-## On-street Parking Vacancies with Basic Info [/imp-endpoint/api/V1/Resources/Parking/OnStreetVacancies?lat={lat}&lng={lng}&radius={radius}?size={size}&unit={unit}]    
+## On-street Parking Vacancies with Basic Info [/imp-endpoint/api/V1/Resources/Parking/OnStreetVacancies?lat={lat}&lng={lng}&radius={radius}?length={length}&width={width}&unit={unit}]    
 This collection contains a list of all on-street vacansies in an area of interest specified by query parameters together with an URI to acquire more details about a specific vacancy.
 TODO: the list contains only vacancies (FREE parking slots/spots)
 Note: The area of interest can be defined as:
@@ -111,7 +111,8 @@ Parts of the data structure might be omitted if the information is not available
     + lat (string, `52.52`) ... String `lat` latitude value. Has example value.
     + lng (string, `13.39`) ... String `lng` longitude value. Has example value.
     + radius (string, `1000`) ... String `radius` radius value. Has example value.
-    + size (optional, string, `2.5`) ... String `size` required size value (car size). Has example value. If not defined a default value is used
+    + length (optional, string, `5`) ... String `length` required length value (car size). Has example value. If not defined a default value is used
+    + width (optional, string, `2.5`) ... String `width` required width value (car size). Has example value. If not defined a default value is used
     + unit (optional, string, `m`) ... String `unit` measurement unit for the size value. Has example value. If not defined a default value is used
     
 + Request
