@@ -10,19 +10,23 @@ This is a description of rest interfaces ready to be implemented in IMP.
 This is a group of all rest resources related to heatmap as PNG file. Heat map is a graphical representation of data where the individual values are represented as colors
 Currently it is planned to be used to represent two service categories: CarSharing and BikeSharing services
 
-## CarSharing Heatmap [/imp-endpoint/api/V1/Info/Heatmap/CarSharing?date={x}&left_lower_lat={lllat}&left_lower_lng={lllng}&right_upper_lng={rulng}&right_upper_lat={rulat}&operatorList={operatorList}]    
-Get WMS PNG file for carSharing for a specific date, for a specific bounding box (place) and for specific free-floating carSharing operators (Car2Go_Berlin, DriveNow, etc.)
+## Eventing Heatmap [/imp-endpoint/api/V1/Info/Heatmap/Eventing?startDate={date1}&endDate={date2}&left_lower_lat={lllat}&left_lower_lng={lllng}&right_upper_lng={rulng}&right_upper_lat={rulat}&width={wdval}&height={htval}]  
+Get WMS PNG file for Eventing Service for a date slot and for a specific bounding box (place).
+Tthe returned image with dots represent events taking place in the specific area.
 
-### Getting heatmap as PNG image [GET]
+### Getting eventing heatmap as PNG image [GET]
+@nottestable
 
 + Parameters
-    + date (required, string, `1404892800000`) ... a date in the history (later also in the future) Has example value.
-    + lllat (required, string, `52.482780222078205`) ... 
-    + lllng (required, string, `13.3154296875`) ...     
-    + rulng (required, string, `13.359375`) ... 
-    + rulat (required, string, `52.50953477032729`) ... 
-    + operatorList (optional, string, `Car2Go_Berlin,DriveNow`) ... comma-separated list of CarSharing operator ids. If not specified -> returns image for all available _CarSharing_ operators
-
+    + date1 (required, string, `1410307200000`) ... start date in the history or in the future. Has example value.
+    + date2 (required, string, `1418169600000`) ... end date in the history or in the future. Has example value.
+    + lllng (required, string, `13.030338`) ...   
+    + lllat (required, string, `52.38294`) ... 
+    + rulng (required, string, `13.556067`) ... 
+    + rulat (required, string, `52.638559`) ... 
+    + width (required, string, `612`) ... the width of the heatmap
+    + height (required, string, `512`) ... the height of the heatmap
+    
 + Request
 
     + Headers
