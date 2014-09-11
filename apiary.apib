@@ -5,6 +5,63 @@ FORMAT: 1A
 # Introduction
 
 This is a description of rest interfaces ready to be implemented in IMP.
+
+# Group Eventing
+This is a group of all rest resources related to eventing service. Spec is in the progress and should be discussed.
+
+## Events with Basic Info [/imp-endpoint/api/V1/Resources/Eventing/Events?startDate={date1}&endDate={date2}&lat={lat}&lng={lng}&radius={radius}]    
+This collection contains a list of all events in an area of interest specified by query parameters together with an URI to acquire more details about a specific event.
+Note: The area of interest can be defined as:
+
+* a bounding circle (lat={lat}&lng={lng}&radius={radius})
+* a bounding box (left_lower_lat={min_lat}&left_lower_lng={min_lng}&right_upper_lat={max_lat}&right_upper_lng={max_lng})
+
+The If-Modified-Since (optional) can be set to a specific date-time in order to request only resources modified after a particular date-time.
+Date time in HTTP date format for e.g. Wed, 09 Apr 2008 23:55:38 GMT
+
+The data structure of the response contains the following attributes:
+
+attribute | json data type | comments
+--- | --- | ---
+metadata | Object | List of service providers and the last update times and failures if any [{serviceAlias:"XXX",lastUpdateTime:dd-mm-yyyyThhmmssZ,messages:[]}]
+--- | --- | ---
+resources | Array | Array of resources within the search area
+--- | --- | ---
+
+    
+### Getting events [GET]
+@nottestable
+
++ Parameters
+    + date1 (required, string, `1410307200000`) ... start date in the history or in the future. Has example value.
+    + date2 (required, string, `1418169600000`) ... end date in the history or in the future. Has example value.
+    + lat (string, `52.52`) ... String `lat` latitude value. Has example value.
+    + lng (string, `13.39`) ... String `lng` longitude value. Has example value.
+    + radius (string, `1000`) ... String `radius` radius value. Has example value.
+    
++ Request
+
+    + Headers
+    
+            If-Modified-Since: Wed, 09 Apr 2008 23:55:38 GMT 
+        
++ Response 200 (application/json)   
+
+        {
+            "metaData": [
+                {
+                    "serviceAlias": "city2.e??",
+                    "lastUpdateTime": "2014-07-10T11:11:04+0200",
+                    "messages": []
+                }
+            ],
+            "resources": [
+                {
+                    
+                }
+            ]
+        }
+
         
 # Group Heatmap
 This is a group of all rest resources related to heatmap as PNG file. Heat map is a graphical representation of data where the individual values are represented as colors
