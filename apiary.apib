@@ -63,11 +63,11 @@ Get WMS PNG file for carsharing for a specific date, a specific bounding box (pl
 
 
 # Group Parking
-This is a group of all parking related rest resources. Parking Garages & On-street Paring Vacancies
+This is a group of all parking related rest resources. Parking Garages & On-street Parking Vacancies
 
 ## On-street Parking Vacancies with Basic Info [/imp-endpoint/api/V1/Resources/Parking/OnStreetVacancies?lat={lat}&lng={lng}&radius={radius}?length={length}&width={width}&unit={unit}]    
 This collection contains a list of all on-street vacansies in an area of interest specified by query parameters together with an URI to acquire more details about a specific vacancy.
-TODO: the list contains only vacancies (FREE parking slots/spots)
+TODO: the list contains only vacancies (FREE parking spots, no OCCUPIED parking spots!)
 Note: The area of interest can be defined as:
 
 * a bounding circle (lat={lat}&lng={lng}&radius={radius})
@@ -86,7 +86,7 @@ metadata | Object | List of service providers and the last update times and fail
 resources | Array | Array of resources within the search area
 --- | --- | ---
 actions | Array | List of available actions on this resource (currently empty, in the future can be subscribe for changes...)
-id | Number | Internal parking slot/spot identification number
+id | Number | Internal parking spot identification number
 description | String | description
 type | String | (="OnStreetParkingVacancy" or similar) TODO
 uri | URI | URI to request more details
@@ -95,8 +95,10 @@ provider | String | Parking service provider (usually equals operator)
 operator | String | Parking space operator (usually equals provider)
 category | ENUM | public, resident, handicapped
 
-TODO: The following parameters are available in parking garages and are to be discussed:
+TODO: The following parameters are available in parking garages and should be discussed if they make sense in parking vacancies:
 
+attribute | json data type | comments
+--- | --- | ---
 availability | Double | Availability in percentage
 totalnumber | Object | Number of lots for different categories { "handicappedOnly":Int, "womenOnly":Int, "others":Int }
 lottype | Enum | Type of garage {"Parkhaus", "Parkzone", "Tiefgarage", "Parkplatz"} 
@@ -148,6 +150,56 @@ Parts of the data structure might be omitted if the information is not available
                     "category": "handicapped"
                 }
             ]
+        }
+
+## Parking Vacancy with Detailed Info [/imp-endpoint/api/V1/Resources/Parking/OnStreetVacancies/{id}]
+
+A single parking vacancy object with Detailed Information. 
+The data structure of the response contains the attributes with the basic information and additionally the following attributes:
+
+attribute | json data type | comments
+--- | --- | ---
+... | ... | ...
+pricing | String | Price structure 
+payment | Array | Payment options {COINPAY, BANKNOTEPAY, BANKCARDPAY, CREDICARDPAY, PREPAIDCARDPAY, PAYCARDPAY, DEBITPAY}
+bookable | Boolean |  
+allowedStay | Object | Allowed stay { "value": Number, "unit": String } 
+restrictions | Array | Usage restrictions {"VisitorsOnly","GuestsOnly"}
+services | Array | Special services { "WomenParking", "DisabledParking", "Monitored", "ChargingStation", "ParentChild", "MotorCycle", ... } 
+securityComment | String |  Securtiy features
+
+### Getting a specific parking vacancy [GET] 
+@nottestable
+
++ Parameters
+    + id (string, `8367`) ... String `id` as retrieved through *[/imp-endpoint/api/V1/Resources/Parking/OnStreetVacancies?lat={lat}&lng={lng}&radius={radius}]*
+
++ Response 200 (application/json) 
+
+        {
+            "actions": [],
+            "id": 271366,
+            "description": "Some description",
+            "type": "OnStreetParkingVacancy",
+            "uri": "Resources/Parking/OnStreetVacancies/270113",
+            "location": {
+                "latitude": 52.51908,
+                "longitude": 13.39094,
+                "system": "WGS_84"
+            },
+            "provider": "city2.e..",
+            "operator": "city2.e..",
+            "category": "handicapped",
+            "pricing": "2,00 EUR für die 1. Std. <br>2. und 3. Stunde 1,50 Euro<br>je weiter Stunde 1,00 Euro<br>Tagespreis 15,00 Euro<br>Monatspreis 100,00 Euro",
+            "payment": [
+                "BANKNOTEPAY",
+                "COINPAY"
+            ],
+            "bookable": false,
+            "allowedStay": null,
+            "restrictions": null,
+            "services": null,
+            "securityComment": null
         }
 
 
