@@ -6,8 +6,9 @@ FORMAT: 1A
 
 This is a description of rest interfaces ready to be implemented in IMP.
 
-# Group Eventing
-This is a group of all rest resources related to eventing service. Spec is in the progress and should be discussed.
+# Group Taxi Service
+
+This is a group of all taxi related rest resources.
 
 ## Events with Basic Info [/imp-endpoint/api/V1/Resources/Eventing/Events?startDate={date1}&endDate={date2}&lat={lat}&lng={lng}&radius={radius}]    
 This collection contains a list of all events in an area of interest specified by query parameters together with an URI to acquire more details about a specific event.
@@ -65,13 +66,13 @@ resources | Array | Array of resources within the search area
         
 # Group Heatmap
 This is a group of all rest resources related to heatmap as PNG file. Heat map is a graphical representation of data where the individual values are represented as colors
-Currently it is planned to be used to represent service categories: CarSharing, BikeSharing, Eventing services
+Currently it is planned to be used to represent service categories: CarSharing, BikeSharing, Taxi Services
 
-## Eventing Heatmap [/imp-endpoint/api/V1/Info/Heatmap/Eventing?startDate={date1}&endDate={date2}&left_lower_lat={lllat}&left_lower_lng={lllng}&right_upper_lng={rulng}&right_upper_lat={rulat}&width={wdval}&height={htval}]  
-Get WMS PNG file for Eventing Service for a date slot and for a specific bounding box (place).
-Tthe returned image with dots represent events taking place in the specific area.
+## TaxiService Demand Heatmap [/imp-endpoint/api/V1/Info/Heatmap/TaxiService/Demand?startDate={date1}&endDate={date2}&left_lower_lat={lllat}&left_lower_lng={lllng}&right_upper_lng={rulng}&right_upper_lat={rulat}&width={wdval}&height={htval}]  
+Get WMS PNG file displaying Taxi Service Demand as a heatmap for a date slot and for a specific bounding box (place).
+Note: Currently the returned image with dots represent events taking place in the specific area.
 
-### Getting eventing heatmap as PNG image [GET]
+### Getting taxi service heatmap as PNG image [GET]
 @nottestable
 
 + Parameters
