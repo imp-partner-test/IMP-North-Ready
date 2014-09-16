@@ -49,7 +49,33 @@ quota | Object |
 
 + Response 200
         [BillableEvent][]
-        
+  
+ 
+### Create a BillableEvent [POST]
+@nottestable
+
++ Request (application/json)
+
+        {
+            "billableEvent": {
+                "eventId": "?",
+                "productCode": "car park",
+                "productName": "Parking Isartor"
+                "timestamp": "2014-07-10T14:23:11+0200",
+                "userId": "bebe",
+                "quota": {
+                    "quotaId ": "1",
+                    "quotaType": "distance",
+                    "distance": "50",
+                    "unitType": "meters"
+                }
+            }
+        }
+
++ Response 201
+    
+        {"eventId": "123"}
+     
 
 ## BillableEvents Collection [/imp-endpoint/api/V1/Billing/BillableEvents?userId{userId}&startDate={date1}&endDate={date2}]  
 Billing events happened in the specified date slot, for a specific user declared in the request body.
