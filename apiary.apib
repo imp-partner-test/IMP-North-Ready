@@ -256,8 +256,8 @@ Note: userToken is used to check the right to see billable events!
 + Parameters
     + userId (optional, string, `mp1_`) ... Id of customer to whom events shall be accounted to. can be a traveller, can be a mp with all his travellers. Has example value.   
     + spId (optional, string, `sp1`) ... Id of service provider who wants to see events about its service usage independand of customers. Has example value.   
-    + date1 (required, string, `1410307200000`) ... start date in the history or in the future. Has example value.
-    + date2 (required, string, `1418169600000`) ... end date in the history or in the future. Has example value.
+    + date1 (optional, string, `1410307200000`) ... start date in the history or in the future. Has example value.
+    + date2 (optional, string, `1418169600000`) ... end date in the history or in the future. Has example value.
     
 + Request
 
@@ -277,8 +277,8 @@ Note: userToken is used to check the right to see billable events!
         {
             "startDate": "2014-07-10T14:23:11+0200",
             "endDate": "2014-08-10T14:23:11+0200"
-            "userId": "mp1_traveler3",
-            "spId": "driveNow"
+            "userId": "mp1_traveler3_is_optional?",
+            "spId": "driveNow_is_optional?"
         }
 
 + Response 201
