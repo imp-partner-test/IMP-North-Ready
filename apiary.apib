@@ -62,34 +62,30 @@ Note: userToken is used to check the right to see billable events!
 + Model (application/hal+json)
 
         [
-            {
-                "billableEvent": {
-                    "eventId": "111",
-                    "productCode": "car park",
-                    "productName": "Parking Isartor"
-                    "timestamp": "2014-07-10T14:23:11+0200",
-                    "userId": "mp1_traveler3",
-                    "quota": {
-                        "quotaId ": "1",
-                        "quotaType": "distance",
-                        "distance": "50",
-                        "unitType": "meters"
-                    }
+            "billableEvent": {
+                "eventId": "111",
+                "productCode": "car park",
+                "productName": "Parking Isartor"
+                "timestamp": "2014-07-10T14:23:11+0200",
+                "userId": "mp1_traveler3",
+                "quota": {
+                    "quotaId ": "1",
+                    "quotaType": "distance",
+                    "distance": "50",
+                    "unitType": "meters"
                 }
             },
-            {
-                "billableEvent": {
-                    "eventId": "112",
-                    "productCode": "ticketing",
-                    "productName": "Ticket"
-                    "timestamp": "2014-07-10T14:23:11+0200",
-                    "userId": "mp1_traveler4",
-                    "quota": {
-                        "quotaId ": "1",
-                        "quotaType": "distance",
-                        "distance": "50",
-                        "unitType": "meters"
-                    }
+            "billableEvent": {
+                "eventId": "112",
+                "productCode": "ticketing",
+                "productName": "Ticket"
+                "timestamp": "2014-07-10T14:23:11+0200",
+                "userId": "mp1_traveler4",
+                "quota": {
+                    "quotaId ": "1",
+                    "quotaType": "distance",
+                    "distance": "50",
+                    "unitType": "meters"
                 }
             }
         ]
@@ -182,7 +178,7 @@ unit | String | EUR
                     }
                 }
             ]
-        }
+          }
 
 ### Retrieve a single invoice [GET]
 @nottestable
@@ -192,6 +188,86 @@ unit | String | EUR
 
 + Response 200
         [Invoice][]
+
+## Invoices Collection [/imp-endpoint/api/V1/Billing/Invoices?userId={userId}&spId={serviceProviderId}&startDate={date1}&endDate={date2}]  
+Invoices created the specified date slot. userId or spId (or both) can be specified to filter events.
+
+Note: userToken is used to check the right to see billable events!
+
++ Model (application/hal+json)
+
+        [
+            "invoice" : {
+                "invoiceId": "1",
+                "billableEvents":
+                [
+                    "billableEvent": {
+                        "eventId": "111",
+                        "productCode": "car park",
+                        "productName": "Parking Isartor"
+                        "timestamp": "2014-07-10T14:23:11+0200",
+                        "userId": "mp1_traveler3",
+                        "quota": {
+                            "quotaId ": "1",
+                            "quotaType": "distance",
+                            "distance": "50",
+                            "unitType": "meters"
+                        }
+                    },
+                    "billableEvent": {
+                        "eventId": "112",
+                        "productCode": "ticketing",
+                        "productName": "Ticket"
+                        "timestamp": "2014-07-10T14:23:11+0200",
+                        "userId": "mp1_traveler4",
+                        "quota": {
+                            "quotaId ": "1",
+                            "quotaType": "distance",
+                            "distance": "50",
+                            "unitType": "meters"
+                        }
+                    }
+                ]
+            }
+            "invoice" : {
+                "invoiceId": "2",
+                "billableEvents":
+                [
+                    "billableEvent": {
+                        "eventId": "111",
+                        "productCode": "car park",
+                        "productName": "Parking Isartor"
+                        "timestamp": "2014-07-10T14:23:11+0200",
+                        "userId": "mp1_traveler3",
+                        "quota": {
+                            "quotaId ": "1",
+                            "quotaType": "distance",
+                            "distance": "50",
+                            "unitType": "meters"
+                        }
+                    }
+                ]
+            }
+        ]
+
+### List all Invoices [GET]
+@nottestable
+
++ Parameters
+    + userId (optional, string, `mp1_`) ... Id of customer to whom events shall be accounted to. can be a traveller, can be a mp with all his travellers. Has example value.   
+    + spId (optional, string, `sp1`) ... Id of service provider who wants to see events about its service usage independand of customers. Has example value.   
+    + date1 (required, string, `1410307200000`) ... start date in the history or in the future. Has example value.
+    + date2 (required, string, `1418169600000`) ... end date in the history or in the future. Has example value.
+    
++ Request
+
+    + Headers
+        
+            userToken: {someTokenToCheckAuthentification} 
+            
++ Response 200 (application/json)
+
+        [Invoices Collection][]
 
 ### Create an Invoice [POST]
 @nottestable
