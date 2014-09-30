@@ -142,6 +142,7 @@ Note: userToken is used to check the right to see billable events.
 
 ### List all BillableEvents [GET]
 @nottestable
+Note: for internam IMP use only
 
 + Parameters
     + userId (string, `mp1_traveler2`) ... Id of a user to whom events shall be accounted to. Has example value.   
@@ -158,6 +159,8 @@ Note: userToken is used to check the right to see billable events.
 + Response 200 (application/json)
 
         [BillableEvents Collection][]
+
+## BillableEvents Collection [/imp-endpoint/api/V1/Billing/BillableEvents]  
     
 ### Create a BillableEvent [POST]
 @nottestable
