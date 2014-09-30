@@ -10,21 +10,43 @@ This is a description of rest interfaces ready to be implemented in IMP.
 This is a group of all rest resources related to billing service.
 
 ## BillableEvent [/imp-endpoint/api/V1/Billing/BillableEvents/{id}]
-One billable event! can be a SingleEvent (Buying a Ticket) or a ComposedEvent (Enter Parking Log & Exit Parking Lot)
+One billable event. Can be a single time event (Buying a Ticket) or a event with end and start time (enter parking lot & exit parking lot)
 
-The data structure of the response has the following attributes (explained are mandatory fields only):
+The data structure of billable event has the following attributes:
 
 attribute | json data type | comments
 --- | --- | ---
-eventId | String | id of the event (auto incremented value)
-timestamp | String | Timestamp when this event occurred
-userId | String | Id of customer to whom this event shall be accounted to
-transactionId | String | Unique id of this transaction
-productCode | String | This code determined the consumed product and has effect on the rating and billing
+eventId | String | id of the event. (auto incremented value)
+timestamp | String | Timestamp when this event occurred  (mandatory)
+userId | String | Id of customer to whom this event shall be accounted to  (mandatory)
+transactionId | String | Unique id of this transaction (mandatory)
+productCode | String | This code determined the consumed product and has effect on the rating and billing (mandatory)
 productName | String | Public name of the product
-vendorId | String | Id of entity that created this event
-serviceProviderId | String | Id of the service provider
-quota | Object | optional object!
+vendorId | String | Id of entity that created this event (mandatory)
+quantity | Float | Quantity of consumption
+quantityType | String | Type of consumed quantity (e.g. units, seconds, kilometers, liters, …)
+price | Float | Price of this event. If this field is filled the event is considered as already rated
+extUserId | String | External Id of customer to whom this event shall be accounted
+serviceId | Int | Id of the service that has been used to create this event
+serviceProviderId | String | Id of the service provider (mandatory)
+quota | Object | optional object with more information about the event
+
+The data structure of the quota object:
+
+attribute | json data type | comments
+--- | --- | ---
+quotaId | long | id of the quota (auto incremented value)
+quotaType | String | Defines the type of the quota. This shall be used in order to correctly cast the quota attributes.  (mandatory)
+duration | long | A time dimension. Default unit: millis
+startTimestamp | long | Start of the duration
+endTimestamp | long | End of the duration
+startLatLng | String | Start of distance measuring. Geoposition in format latitude|longitude (e.g. “14.567568|27.984234”)
+endLatLng | String | End of distance measuring. Geoposition in format latitude|longitude (e.g. “14.567568|27.984234”)
+distance  | Float | Distance in distance units determined by unit type. Default: meters
+units | Float | Generic quota field
+unitType | String | Determines unit type of the quota (meters, kg, hours, …)
+namedEvent | String | Any kind of additional identification or description
+
 
 + Model (application/hal+json)
     
