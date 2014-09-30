@@ -8,6 +8,7 @@ This is a description of rest interfaces ready to be implemented in IMP.
 
 # Group Billing
 This is a group of all rest resources related to billing service.
+IMP offers REST interface to Service Providers and Mobility Providers to deliver billable events in order to use billing functionality of IMP.
 
 ## BillableEvent [/imp-endpoint/api/V1/Billing/BillableEvents/{id}]
 One billable event. Can be a single time event (Buying a Ticket) or a event with end and start time (enter parking lot & exit parking lot)
@@ -21,15 +22,15 @@ timestamp | String | Timestamp when this event occurred  (mandatory)
 userId | String | Id of customer to whom this event shall be accounted to  (mandatory)
 transactionId | String | Unique id of this transaction (mandatory)
 productCode | String | This code determined the consumed product and has effect on the rating and billing (mandatory)
-productName | String | Public name of the product
+productName | String | Public name of the product (optional)
 vendorId | String | Id of entity that created this event (mandatory)
-quantity | Float | Quantity of consumption
-quantityType | String | Type of consumed quantity (e.g. units, seconds, kilometers, liters, …)
-price | Float | Price of this event. If this field is filled the event is considered as already rated
-extUserId | String | External Id of customer to whom this event shall be accounted
-serviceId | Int | Id of the service that has been used to create this event
+quantity | Float | Quantity of consumption (optional)
+quantityType | String | Type of consumed quantity (e.g. units, seconds, kilometers, liters, …) (optional)
+price | Float | Price of this event. If this field is filled the event is considered as already rated (optional)
+extUserId | String | External Id of customer to whom this event shall be accounted (optional)
+serviceId | Int | Id of the service that has been used to create this event (optional)
 serviceProviderId | String | Id of the service provider (mandatory)
-quota | Object | optional object with more information about the event
+quota | Object | optional object with more information about the event (optional)
 
 The data structure of the quota object:
 
@@ -37,15 +38,15 @@ attribute | json data type | comments
 --- | --- | ---
 quotaId | long | id of the quota (auto incremented value)
 quotaType | String | Defines the type of the quota. This shall be used in order to correctly cast the quota attributes.  (mandatory)
-duration | long | A time dimension. Default unit: millis
-startTimestamp | long | Start of the duration
-endTimestamp | long | End of the duration
-startLatLng | String | Start of distance measuring. Geoposition in format latitude|longitude (e.g. “14.567568|27.984234”)
-endLatLng | String | End of distance measuring. Geoposition in format latitude|longitude (e.g. “14.567568|27.984234”)
-distance  | Float | Distance in distance units determined by unit type. Default: meters
-units | Float | Generic quota field
-unitType | String | Determines unit type of the quota (meters, kg, hours, …)
-namedEvent | String | Any kind of additional identification or description
+duration | long | A time dimension. Default unit: millis (optional)
+startTimestamp | long | Start of the duration (optional)
+endTimestamp | long | End of the duration (optional)
+startLatLng | String | Start of distance measuring. Geoposition in format latitude|longitude (e.g. “14.567568|27.984234”) (optional)
+endLatLng | String | End of distance measuring. Geoposition in format latitude|longitude (e.g. “14.567568|27.984234”) (optional)
+distance  | Float | Distance in distance units determined by unit type. Default: meters (optional)
+units | Float | Generic quota field (optional)
+unitType | String | Determines unit type of the quota (meters, kg, hours, …) (optional)
+namedEvent | String | Any kind of additional identification or description (optional)
 
 
 + Model (application/hal+json)
