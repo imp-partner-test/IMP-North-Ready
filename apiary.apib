@@ -164,7 +164,8 @@ Note: userToken is used to check the right to see billable events.
 
 + Request (application/json)
 
-        {
+        [
+          {
             "eventTimestamp": 1410527427084,
             "extUserId": "cust1234",
             "price": 2.6,
@@ -183,7 +184,40 @@ Note: userToken is used to check the right to see billable events.
             "transactionId": 1,
             "userId": "henry@simobility.com",
             "vendorId": "100"
-        }
+          },
+          {
+            "eventTimestamp": 1410527429084,
+            "extUserId": "cust9999",
+            "productCode": "car park",
+            "productName": "Parking Isartor",
+            "quantity": 48.0,
+            "quantityType": "time_minutes",
+            "quota": {
+              "duration": "45",
+              "quotaId": 1,
+              "quotaType": "duration",
+              "unitType": "minutes"
+            },
+            "serviceId": 1,
+            "serviceProviderId": 2,
+            "transactionId": 1,
+            "userId": "martha@simobility.com",
+            "vendorId": "200"
+          },
+          {
+            "eventTimestamp": 1410527429194,
+            "extUserId": "cust91",
+            "productCode": "some park",
+            "productName": "Parking Isartor",
+            "quantity": 100.0,
+            "quantityType": "EUR",
+            "serviceId": 4,
+            "serviceProviderId": 4,
+            "transactionId": 7,
+            "userId": "misterX@simobility.com",
+            "vendorId": "208"
+          }
+        ]
 
 
 + Response 201
