@@ -7,8 +7,8 @@ FORMAT: 1A
 This is a description of rest interfaces ready to be implemented in IMP.
 
 # Group Billing
-This is a group of all rest resources related to billing service.
-IMP offers REST interface to Service Providers and Mobility Providers to deliver billable events in order to use billing functionality of IMP.
+This is a group of all rest resources related to IMP billing service.
+IMP offers REST interface to Service Providers and Mobility Providers to post billable events to IMP in order to use its billing functionality.
 
 ## BillableEvent [/imp-endpoint/api/V1/Billing/BillableEvents/{id}]
 One billable event. Can be a single time event (Buying a Ticket) or a event with end and start time (enter parking lot & exit parking lot)
@@ -19,17 +19,17 @@ attribute | json data type | comments
 --- | --- | ---
 eventId | String | id of the event. (auto incremented value)
 timestamp | String | Timestamp when this event occurred  (mandatory)
-userId | String | Id of customer to whom this event shall be accounted to  (mandatory)
+userId | String | Id of customer to whom this event shall be accounted to  (mandatory). NOTE: This can be traveler id, mobilitly provider id, or a combined id, e.g. mp1_traveller2
 transactionId | String | Unique id of this transaction (mandatory)
 productCode | String | This code determined the consumed product and has effect on the rating and billing (mandatory)
 productName | String | Public name of the product (optional)
-vendorId | String | Id of entity that created this event (mandatory)
+vendorId | String | Id of entity that created this event (mandatory) NOTE: this can be MP_ID, SP_ID, or IMP
 quantity | Float | Quantity of consumption (optional)
 quantityType | String | Type of consumed quantity (e.g. units, seconds, kilometers, liters, …) (optional)
 price | Float | Price of this event. If this field is filled the event is considered as already rated (optional)
-extUserId | String | External Id of customer to whom this event shall be accounted (optional)
+extUserId | String | External Id of customer to whom this event shall be accounted (optional). NOTE: this field can be used as traveler id.
 serviceId | Int | Id of the service that has been used to create this event (optional)
-serviceProviderId | String | Id of the service provider (mandatory)
+serviceProviderId | String | Id of the service provider (mandatory). NOTE: this field is SP_ID
 quota | Object | optional object with more information about the event (optional)
 
 The data structure of the quota object:
@@ -75,6 +75,7 @@ namedEvent | String | Any kind of additional identification or description (opti
 
 ### Retrieve a single billable event [GET]
 @nottestable
+Note: For internal IMP use only!
 
 + Parameters
     + id (string, `111`) ... an event id
@@ -84,12 +85,13 @@ namedEvent | String | Any kind of additional identification or description (opti
   
      
 
-## BillableEvents Collection [/imp-endpoint/api/V1/Billing/BillableEvents?travelerId={travelerId}&mpId={mobilityProviderId}&spId={serviceProviderId}&startDate={date1}&endDate={date2}]  
-Billing events happened in the specified date slot. travelerId, userId or spId can be specified to filter events (minimum one is mandatory!)
-Old idea: Ids chain through MP->IMP->SP is realized as follows: a traveler at MP with `travelerId`, a MP at IMP with `mpId`, so the traveller at IMP with `mpId_travelerId`
-All BillableEvents (produced in IMP or posted by SPs) contain attribute with a userId in form `mpId_travelerId`
+## BillableEvents Collection [/imp-endpoint/api/V1/Billing/BillableEvents?userId={userId}&serviceProviderId={serviceProviderId}&startDate={date1}&endDate={date2}]  
+A list of billable events happened in the specified date slot and filtered by userId (can be traveler id, mobility provider id or combined id "mp1_traveler2") or by serviceProviderIds (at least one is mandatory!)
 
-Note: userToken is used to check the right to see billable events!
+Idea: Ids chain through MP->IMP->SP is realized as follows: a traveler at MP with `travelerId`, a MP at IMP with `mpId`, so the traveller at IMP with `mpId_travelerId`
+All BillableEvents (produced in IMP) contain attribute userId in form `mpId_travelerId`, billableEvents provided by MPs, or SPs can provide different id schema
+
+Note: userToken is used to check the right to see billable events.
 
 + Model (application/hal+json)
 
@@ -142,9 +144,8 @@ Note: userToken is used to check the right to see billable events!
 @nottestable
 
 + Parameters
-    + travelerId (optional, string, `traveler_1`) ... Id of a traveller to whom events shall be accounted to. Has example value.   
-    + mobilityProviderId (optional, string, `mp1`) ... Id of a mobilityprovider to whom events shall be accounted to (with all his travelers!)
-    + serviceProviderId (optional, string, `sp1`) ... Id of service provider who wants to see events about its service usage independand of customers. Has example value.   
+    + userId (string, `mp1_traveler2`) ... Id of a user to whom events shall be accounted to. Has example value.   
+    + serviceProviderId (string, `sp1`) ... Id of service provider. Has example value.   
     + date1 (required, string, `1410307200000`) ... start date in the history or in the future. Has example value. If the start and end dates are not specified the last month is taken.
     + date2 (required, string, `1418169600000`) ... end date in the history or in the future. Has example value.
     
@@ -186,8 +187,8 @@ Note: userToken is used to check the right to see billable events!
 
 
 + Response 201
-    
-    [BillableEvent][]  
+
+        []  
   
 
 ## Invoice [/imp-endpoint/api/V1/Billing/Invoices/{id}]
