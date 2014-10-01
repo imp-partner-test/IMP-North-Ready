@@ -8,7 +8,8 @@ This is a description of rest interfaces ready to be implemented in IMP.
 
 # Group Billing
 This is a group of all rest resources related to IMP billing service.
-IMP offers REST interface to Service Providers and Mobility Providers to post billable events to IMP in order to use its billing functionality.
+IMP offers REST interface to Service Providers and Mobility Providers to post billable events to IMP in order to use its billing functionality. IMP uses this interface to create
+internal BillableEvents.
 
 ## BillableEvent [/imp-endpoint/api/V1/Billing/BillableEvents/{id}]
 One billable event. Can be a single time event (Buying a Ticket) or a event with end and start time (enter parking lot & exit parking lot)
@@ -17,7 +18,8 @@ The data structure of billable event has the following attributes:
 
 attribute | json data type | comments
 --- | --- | ---
-eventId | String | id of the event. (auto incremented value)
+id | String | id of the event. (auto incremented value)
+uri | String | proposal: "Billing/BillableEvents/1"
 timestamp | String | Timestamp when this event occurred  (mandatory)
 userId | String | Id of customer to whom this event shall be accounted to  (mandatory). NOTE: This can be traveler id, mobilitly provider id, or a combined id, e.g. mp1_traveller2
 transactionId | String | Unique id of this transaction (mandatory)
