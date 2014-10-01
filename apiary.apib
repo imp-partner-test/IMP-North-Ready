@@ -8,13 +8,13 @@ This is a description of rest interfaces ready to be implemented in IMP.
 
 # Group Billing
 This is a group of all rest resources related to IMP billing service.
-IMP offers REST interface to Service Providers and Mobility Providers to post billable events to IMP in order to use its billing functionality. IMP uses this interface to create
-internal BillableEvents.
+IMP offers this REST interface to its Partner (Service Providers and Mobility Providers) to provide billable events to IMP in order to use its billing functionality. Partners can provide events to IMP, but can't retrieve them.
+IMP uses this REST interface internally to create IMP BillableEvents and retrieve them for internal purposes.
 
 ## BillableEvent [/imp-endpoint/api/V1/Billing/BillableEvents/{id}]
 One billable event. Can be a single time event (Buying a Ticket) or a event with end and start time (enter parking lot & exit parking lot)
 
-The data structure of billable event has the following attributes:
+The data structure of a billable event has the following attributes:
 
 attribute | json data type | comments
 --- | --- | ---
@@ -234,7 +234,7 @@ Can be used to post one or multiple events in one call. Note: Response is 200 an
   
   
 # Group Billing Invoices Draft
-this is just a draft!
+This is just a first draft! Not yet ready for implementation!
 
 ## Invoice [/imp-endpoint/api/V1/Billing/Invoices/{id}]
 The invoice API is still under discussion! This is a first draft!
