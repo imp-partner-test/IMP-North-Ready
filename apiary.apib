@@ -18,36 +18,36 @@ The data structure of a billable event has the following attributes:
 
 attribute | json data type | comments
 --- | --- | ---
-id | String | id of the event. (auto incremented value)
+id | String | id of the event. (auto generated value)
 uri | String | proposal: "Billing/BillableEvents/1"
 timestamp | String | Timestamp when this event occurred  (mandatory)
 userId | String | Id of customer to whom this event shall be accounted to  (mandatory). NOTE: This can be traveler id, mobilitly provider id, or a combined id, e.g. mp1_traveller2
-transactionId | String | Unique id of this transaction (mandatory)
-productCode | String | This code determined the consumed product and has effect on the rating and billing (mandatory)
+transactionId | String | Unique id of this transaction (optional) Example: one event enter parking, one event exit parking. noth events have the same transaction id.
+productCode | String | This code determines the consumed offering (product) and has to correlate with the defined product in the billing system (mandatory)
 productName | String | Public name of the product (optional)
 vendorId | String | Id of entity that created this event (mandatory) NOTE: this can be MP_ID, SP_ID, or IMP
 quantity | Float | Quantity of consumption (optional)
 quantityType | String | Type of consumed quantity (e.g. units, seconds, kilometers, liters, …) (optional)
 price | Float | Price of this event. If this field is filled the event is considered as already rated (optional)
 extUserId | String | External Id of customer to whom this event shall be accounted (optional). NOTE: this field can be used as traveler id.
-serviceId | Int | Id of the service that has been used to create this event (optional)
+serviceId | String | Id of the service that has been used to create this event (optional). one serviceProvider can offer different services (Service offering). This id identifies the service offering.
 serviceProviderId | String | Id of the service provider (mandatory). NOTE: this field is SP_ID
-quota | Object | optional object with more information about the event (optional)
+quota | Object | optional object used in case of more complex price models. (optional) if this field exists, "price" and "quantity" are overridden. 
 
 The data structure of the quota object:
 
 attribute | json data type | comments
 --- | --- | ---
-quotaId | long | id of the quota (auto incremented value)
-quotaType | String | Defines the type of the quota. This shall be used in order to correctly cast the quota attributes.  (mandatory)
+quotaType | String | Defines the type of the quota. This shall be used in order to correctly cast the quota attributes. (mandatory)
 duration | long | A time dimension. Default unit: millis (optional)
 startTimestamp | long | Start of the duration (optional)
 endTimestamp | long | End of the duration (optional)
-startLatLng | String | Start of distance measuring. Geoposition in format latitude|longitude (e.g. “14.567568|27.984234”) (optional)
-endLatLng | String | End of distance measuring. Geoposition in format latitude|longitude (e.g. “14.567568|27.984234”) (optional)
-distance  | Float | Distance in distance units determined by unit type. Default: meters (optional)
-units | Float | Generic quota field (optional)
-unitType | String | Determines unit type of the quota (meters, kg, hours, …) (optional)
+startLatLng | String | Start of distance measuring. Geoposition in format latitude|longitude (e.g. “14.567568|27.984234”) (optional)  "businessBoundary"
+endLatLng | String | End of distance measuring. Geoposition in format latitude|longitude (e.g. “14.567568|27.984234”) (optional) "businessBoundary"
+distance  | Float | Distance in distance units determined by unit type. 7
+distanceUnit  | String | Unit for distance (sample: meters, ISO norm checken). km
+units | Float | Generic quota field (optional) 3
+unitType | String | Determines unit type of the quota (meters, kg, hours, …) Default: meters (optional) bananas
 namedEvent | String | Any kind of additional identification or description (optional)
 
 
@@ -65,7 +65,6 @@ namedEvent | String | Any kind of additional identification or description (opti
             "quantityType": "ticket",
             "quota": {
               "distance": 50,
-              "quotaId": 0,
               "quotaType": "distance",
               "unitType": "meters"
             },
