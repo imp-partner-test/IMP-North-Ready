@@ -20,7 +20,7 @@ attribute | json data type | comments
 --- | --- | ---
 id | String | id of the event. (auto generated value)
 uri | String | URI of the resource "Billing/BillableEvents/1"
-timestamp | String | Timestamp when this event occurred in ISO 8601 format: YYYY-MM-DDThh:mm:ssTZD (eg 1997-07-16T19:20:30+01:00) (mandatory)
+eventTimestamp | String | Timestamp when this event occurred in ISO 8601 format: YYYY-MM-DDThh:mm:ssTZD (eg 1997-07-16T19:20:30+01:00) (mandatory)
 userId | String | Id of customer to whom this event shall be accounted to (mandatory). NOTE: This can be id of a traveler, of a mobilitly provider, or a combined id, e.g. mp1_traveller2
 extUserId | String | External Id of customer to whom this event shall be accounted (optional). NOTE: this field can be used as traveler id.
 transactionId | String | Unique id of a transaction this event belongs to (optional) Example usage: both events "enter parking" & "exit parking" would have the same transaction id
@@ -46,8 +46,8 @@ startTimestamp | String | Start of the duration. Timestamp in ISO 8601 format (e
 endTimestamp | long | End of the duration. Timestamp in ISO 8601 format (eg 1997-07-16T19:20:30+01:00) (optional)
 startLatLng | Object | Start of distance measuring. Geoposition in format specified as Point conform to the following GeoJSON Format Specification: http://geojson.org/geojson-spec.html (optional)
 endLatLng | Object | End of distance measuring. Geoposition in format specified as Point conform to the following GeoJSON Format Specification: http://geojson.org/geojson-spec.html (optional)
-distance  | Float | Distance in distance units determined by unit type
-distanceUnit  | String | Unit for distance (sample: meters, TODO: is there a norm?)
+distance | Float | Distance in distance units determined by unit type
+distanceUnit | String | Unit for distance (sample: meters, TODO: is there a norm?)
 units | Float | Generic quota field (optional)
 unitType | String | Determines unit type of the quota (meters, kg, hours, …) Default: meters (optional)
 namedEvent | String | Any kind of additional identification or description (optional)
@@ -58,23 +58,21 @@ namedEvent | String | Any kind of additional identification or description (opti
         {
             "id": 1,
             "uri": "Billing/BillableEvents/1",
-            "eventTimestamp": 1410527427084,
+            "eventTimestamp": "1997-07-16T19:20:30+01:00",
+            "userId": "traveller_1",
             "extUserId": "cust1234",
-            "price": 2.6,
+            "transactionId": "transact1",
             "productCode": "single fare",
             "productName": "Ticket",
+            "vendorId": "100",
             "quantity": 1.0,
             "quantityType": "ticket",
-            "quota": {
-              "distance": 50,
-              "quotaType": "distance",
-              "unitType": "meters"
-            },
-            "serviceId": 1,
-            "serviceProviderId": 1,
-            "transactionId": 1,
-            "userId": "henry@simobility.com",
-            "vendorId": "100"
+            "price": 2.6,
+            "currency": "EUR",
+            "serviceCategory" : "Ticketing",
+            "serviceId": "handyticket:consume",
+            "serviceProviderId": "HandyTicket",
+            "quota": null
         }
 
 ### Retrieve a single billable event [GET]
