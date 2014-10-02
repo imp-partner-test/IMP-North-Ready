@@ -88,59 +88,55 @@ Note: For internal IMP use only!
      
 
 ## BillableEvents Collection [/imp-endpoint/api/V1/Billing/BillableEvents?userId={userId}&serviceProviderId={serviceProviderId}&startDate={date1}&endDate={date2}]  
-A list of billable events happened in the specified date slot and filtered by userId (can be traveler id, mobility provider id or combined id "mp1_traveler2") or by serviceProviderIds (at least one is mandatory!)
+A list of billable events happened in the specified date slot and filtered by userId (can be traveler id, mobility provider id or combined id "mp1_traveler2") or by serviceProviderIds.
+In case no filters were specified, the last x items should be returned.
 
 Idea: Ids chain through MP->IMP->SP is realized as follows: a traveler at MP with `travelerId`, a MP at IMP with `mpId`, so the traveller at IMP with `mpId_travelerId`
 All BillableEvents (produced in IMP) contain attribute userId in form `mpId_travelerId`, billableEvents provided by MPs, or SPs can provide different id schema
 
-Note: userToken is used to check the rights to see billable events.
+Note: userToken is used in header to check the rights to see billable events. Currently GET methods are planned for internal IMP use only.
 
 + Model (application/hal+json)
 
         [
-          {
-            "id": 1,
-            "uri": "Billing/BillableEvents/1",
-            "eventTimestamp": 1410527427084,
-            "extUserId": "cust1234",
-            "price": 2.6,
-            "productCode": "single fare",
-            "productName": "Ticket",
-            "quantity": 1.0,
-            "quantityType": "ticket",
-            "quota": {
-              "distance": 50,
-              "quotaId": 0,
-              "quotaType": "distance",
-              "unitType": "meters"
+            {
+                "id": 1,
+                "uri": "Billing/BillableEvents/1",
+                "eventTimestamp": "2014-07-16T19:20:30+01:00",
+                "userId": "traveller_1",
+                "extUserId": "cust1234",
+                "transactionId": "transact1",
+                "productCode": "single fare",
+                "productName": "Ticket",
+                "vendorId": "100",
+                "quantity": 1.0,
+                "quantityType": "ticket",
+                "price": 2.6,
+                "currency": "EUR",
+                "serviceCategory" : "Ticketing",
+                "serviceId": "htTicketing",
+                "serviceProviderId": "handyTicket",
+                "quota": null
             },
-            "serviceId": 1,
-            "serviceProviderId": 1,
-            "transactionId": 1,
-            "userId": "henry@simobility.com",
-            "vendorId": "100"
-          },
-          {
-            "id": 2,
-            "uri": "Billing/BillableEvents/2",
-            "eventTimestamp": 1410527429084,
-            "extUserId": "cust9999",
-            "productCode": "car park",
-            "productName": "Parking Isartor",
-            "quantity": 48.0,
-            "quantityType": "time_minutes",
-            "quota": {
-              "duration": "45",
-              "quotaId": 1,
-              "quotaType": "duration",
-              "unitType": "minutes"
-            },
-            "serviceId": 1,
-            "serviceProviderId": 2,
-            "transactionId": 1,
-            "userId": "martha@simobility.com",
-            "vendorId": "200"
-          }
+            {
+                "id": 2,
+                "uri": "Billing/BillableEvents/2",
+                "eventTimestamp": "2014-09-16T19:20:30+01:00",
+                "userId": "traveller_2",
+                "extUserId": "cust12345",
+                "transactionId": "transact2",
+                "productCode": "car park",
+                "productName": "Parking Isartor",
+                "vendorId": "100",
+                "quantity": 48,
+                "quantityType": "minutes",
+                "price": 4,
+                "currency": "EUR",
+                "serviceCategory" : "Parking",
+                "serviceId": "vmzParking",
+                "serviceProviderId": "vmz",
+                "quota": null
+            }
         ]
 
 
@@ -168,68 +164,54 @@ Note: for internal IMP use only.
     
 ### Create one or multiple BillableEvents [POST]
 @nottestable
-Can be used to post one or multiple events in one call. Note: Response is 200 and not 201, as no URLs of created resources is returned!
+Can be used to post one or multiple events in one call. Note: Response is 201 with a list of URLs of created resources as content!
 
 + Request (application/json)
 
         [
-          {
-            "eventTimestamp": 1410527427084,
-            "extUserId": "cust1234",
-            "price": 2.6,
-            "productCode": "single fare",
-            "productName": "Ticket",
-            "quantity": 1.0,
-            "quantityType": "ticket",
-            "quota": {
-              "distance": 50,
-              "quotaId": 0,
-              "quotaType": "distance",
-              "unitType": "meters"
+            {
+                "eventTimestamp": "2014-07-16T19:20:30+01:00",
+                "userId": "traveller_1",
+                "extUserId": "cust1234",
+                "transactionId": "transact1",
+                "productCode": "single fare",
+                "productName": "Ticket",
+                "vendorId": "100",
+                "quantity": 1.0,
+                "quantityType": "ticket",
+                "price": 2.6,
+                "currency": "EUR",
+                "serviceCategory" : "Ticketing",
+                "serviceId": "htTicketing",
+                "serviceProviderId": "handyTicket",
+                "quota": null
             },
-            "serviceId": 1,
-            "serviceProviderId": 1,
-            "transactionId": 1,
-            "userId": "henry@simobility.com",
-            "vendorId": "100"
-          },
-          {
-            "eventTimestamp": 1410527429084,
-            "extUserId": "cust9999",
-            "productCode": "car park",
-            "productName": "Parking Isartor",
-            "quantity": 48.0,
-            "quantityType": "time_minutes",
-            "quota": {
-              "duration": "45",
-              "quotaId": 1,
-              "quotaType": "duration",
-              "unitType": "minutes"
-            },
-            "serviceId": 1,
-            "serviceProviderId": 2,
-            "transactionId": 1,
-            "userId": "martha@simobility.com",
-            "vendorId": "200"
-          },
-          {
-            "eventTimestamp": 1410527429194,
-            "extUserId": "cust91",
-            "productCode": "some park",
-            "productName": "Parking Isartor",
-            "quantity": 100.0,
-            "quantityType": "EUR",
-            "serviceId": 4,
-            "serviceProviderId": 4,
-            "transactionId": 7,
-            "userId": "misterX@simobility.com",
-            "vendorId": "208"
-          }
+            {
+                "eventTimestamp": "2014-09-16T19:20:30+01:00",
+                "userId": "traveller_2",
+                "extUserId": "cust12345",
+                "transactionId": "transact2",
+                "productCode": "car park",
+                "productName": "Parking Isartor",
+                "vendorId": "100",
+                "quantity": 48,
+                "quantityType": "minutes",
+                "price": 4,
+                "currency": "EUR",
+                "serviceCategory" : "Parking",
+                "serviceId": "vmzParking",
+                "serviceProviderId": "vmz",
+                "quota": null
+            }
         ]
 
 
-+ Response 200
++ Response 201
 
+        [
+            {"uri": "Billing/BillableEvents/1"},
+            {"uri": "Billing/BillableEvents/2"}
+        ]
   
   
 # Group Billing Invoices Draft
