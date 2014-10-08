@@ -611,8 +611,157 @@ securityComment | String |  Securtiy features
 
 
 # Group Routing
-This is a group of all routing related rest resources. Currently, we use this place to define a 1:n routing interface that we might need for the VBB project.
+This is a group of all routing related rest resources. Currently, we use this place to 
+define a 1:n routing interface that we might need for the VBB project.
 
-# 1:n routing [/imp-endpoint/api/V1/TripProposals/RouteProperties]    
-This is the end point for 1:n routing.
+## get trip proposals [/imp-endpoint/api/V1/TripProposals/RouteProperties]   
+This is the endpoint for 1:n routing.
 
++ Request
+
+    + Headers
+
+            Accept: application/json
+            Content-Type: application/json
+
+    + Body
+    
+            {
+                "origin":{
+                    "type": "Point", "coordinates": [13.074760, 52.393300]
+                },
+                "destinations":{
+                    "type": "LineString", "coordinates": [[13.000, 52.000],[13.111, 52.222],[13.333, 52.444]]
+                },
+                "costFunctions": [
+                {
+                    "percentage": 100,
+                    "costType": "Duration"
+                },
+                "trafficTypes": [
+                    "Walk",
+                    "Bike",
+                    "Car",
+                    "Metro",
+                    "CityTrain",
+                    "Bus"
+              ]
+            }
+            
++ Response
+    
+    + Headers
+    
+            Content-Type: application/json
+
+    + Body
+    
+            [
+                {
+                    "url": "TripProposals/IMR/80812",
+                    "origin": {
+                        "location": {
+                            "latitude": 52.39339065551758,
+                            "longitude": 13.07505989074707,
+                            "system": "WGS_84"
+                        },
+                        "address": null,
+                        "time": "2014-03-27T10:23:12+0100"
+                    },
+                    "destination": {
+                        "location": {
+                            "latitude": 52.52581024169922,
+                            "longitude": 13.369529724121094,
+                            "system": "WGS_84"
+                        },
+                        "address": null,
+                        "time": "2014-03-27T11:04:12+0100"
+                    },
+                    "trafficTypes": [
+                        "Car"
+                    ],
+                    "description": null,
+                    "costs": {
+                        "distance": {
+                            "unit": "Meter",
+                            "value": 35433
+                        },
+                        "duration": {
+                            "unit": "Minute",
+                            "value": 41
+                        },
+                        "price": {
+                            "unit": "Euro",
+                            "value": 17.7165
+                        },
+                        "emission": {
+                            "unit": "Gram",
+                            "value": 5314.95
+                        },
+                        "ticketPrice": null
+                    }
+                },
+                {
+                    "url": "TripProposals/IMR/80813",
+                    "origin": {
+                        "location": {
+                            "latitude": 52.393295,
+                            "longitude": 13.074756,
+                            "system": "WGS_84"
+                        },
+                        "address": null,
+                        "time": "2014-03-27T10:30:00+0100"
+                    },
+                    "destination": {
+                        "location": {
+                            "latitude": 52.525589,
+                            "longitude": 13.369539,
+                            "system": "WGS_84"
+                        },
+                        "address": null,
+                        "time": "2014-03-27T11:21:00+0100"
+                    },
+                    "trafficTypes": [
+                        "Walk",
+                        "CityTrain"
+                    ],
+                    "description": null,
+                    "costs": {
+                        "distance": {
+                            "unit": "Meter",
+                            "value": 28266.81343723691
+                        },
+                        "duration": {
+                            "unit": "Minute",
+                            "value": 51
+                        },
+                        "price": {
+                            "unit": "Euro",
+                            "value": 3.2
+                        },
+                        "emission": {
+                            "unit": "Gram",
+                            "value": 621.225709056449
+                        },
+                        "ticketPrice": {
+                            "unit": "EuroCent",
+                            "value": 320,
+                            "operatorId": "VBB",
+                            "ticketId": "00101",
+                            "tariffLevel": "B3",
+                            "departureZone": "5750",
+                            "arrivalZone": "5555"
+                        }
+                    }
+                }
+            ]
+        
+### three hashes [POST]
+
+bla bla
+
+    + Request
+        + Headers
+        + Body
+
++ Response 200
