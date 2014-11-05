@@ -6,18 +6,16 @@ FORMAT: 1A
 
 This is a description of rest interfaces ready to be implemented in IMP.
 
-# Group Journey Planner. IMR. One to many extension
-This is a group of all IMR 1:n journey planner related rest resources
+# Group Journey Planner. IMR. One-to-many extension
+This is a group of all IMR one-to-many journey planning rest resources
 
-## List of 1:n Trip Proposals. Intermodal Router [/imp-endpoint/api/V1/TripProposals/IMR/one2many] 
+## List of one-to-many Trip Proposals. Intermodal Router [/imp-endpoint/api/V1/TripProposals/IMR/one2many] 
 
-This collection contains list of trip proposals for 1:n routing with information about tip costs (duration, price and distance) and an URL to request more details about the trip.
-Notes:
-- criteria for selection of tripproposal are specified in the request body
+This collection contains list of trip proposals for one-to-many routing searches with information about tip costs (duration, price and distance). Accitionally an URL to access one selected one-to-one trip. Some notes:
 - start location is in all trip proposals the same, destination is in every proposal different.
 - the trip proposals can be multimodal or intermodal, depending on which routing service the user is subscribed to.
 
-The data structure of collection contains a list of trip proposals. Each trip proposal contains the following attributes:
+The data structure of collection contains a list of trip proposals. Each trip proposal includes the following attributes:
 
 attribute | json data type | comments
 --- | --- | ---
@@ -96,16 +94,18 @@ costs | Array | list of costs for the proposed trip
             ]
 
 
-### Getting Trip Proposals by IMR Planner  [POST]
-@testable
+### Getting one-to-many Trip Proposals by IMR Planner  [GET]
+@nottestable
 
-Selection criteria for 1:n trip proposals is specified in the request body as described in the sample request below with the following attributes:
+Search criteria for 1:n trip proposals is specified in the request body as described in the sample request below with the following attributes:
 
 attribute | json data type | comments
 --- | --- | ---
-origin | Object | start point specified by a geo location (optionally can also include starttime). (addresses can be converted into geo locations by means of "GET /Resources/GeoLocations")
-destination | Object | end point specified by a geo location (optional can also include endtime). Note if time in the origin is specified, time in the destination is discarded! If no time is specified current time is taken.
-viapoints | Array of Objects | list of geolocations the route should pass
+origin | Object | start point, list with one location in GEOJson format (addresses can be converted into geo locations by means of "GET /Resources/GeoLocations")
+destination | Array of Objects | end point. list with n locations in GEOJson Format
+time | String | time of departure or destination
+isDepartureTime | bool |  if true -> time = departure time, if false -> time = arrival time. default value is true.
+viapoints | Array of Objects | list of geo locations that the route should use. optional
 costfunctions | Array of Objects | list of cost factors, (such as Distance, Duration, Price, Emission), each with a percentual weight. Sample custfunction: {"costType":"Duration","percentage":"100"}
 ownVehicles | Array of Objects | list of own vehicles which should be included into trip proposal calculation. Sample object value {"trafficType":"Car", "useParking":true,"useParkAndRide":false, "location":{"longitude":13.064472900000055,"latitude":52.3905689,"system":"WGS84"}}
 userId | String | traveller id that requests a trip. Note: currently not used by IMP and can be any string
@@ -131,8 +131,11 @@ Notes:
     + Body
         
             {
-              "origin": {"timed start location"},
-              "destination": {"timed end locaiton1"},
+              "origin": {"start location 1"},
+              "destination": {
+                {"end locaiton A"},
+                {"end locaiton B"},
+              },
               "viaPoints": [],
               "costFunctions": [
                 {
@@ -177,7 +180,7 @@ Notes:
 
 + Response 200
 
-    [List of 1:n Trip Proposals. Intermodal Router][]
+    [List of one-to-many Trip Proposals. Intermodal Router][]
 
 # Group Journey Planner. Car Router. One to many extension
 This is a group of all journey planner Car Router related rest resources.
