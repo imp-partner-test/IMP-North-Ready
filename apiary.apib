@@ -6,6 +6,74 @@ FORMAT: 1A
 
 This is a description of rest interfaces ready to be implemented in IMP.
 
+# Group Journey Planner. Car Router 1:n
+This is a group of all journey planner Car Router related rest resources.
+            
+## List of Trip Proposals with Basic Info. Car Journey Planner [/imp-endpoint/api/V1/TripProposals/CarRouter] 
+
+This collection contains trip proposals with basic information for specified trip criteria.
+The data structure of the response contains the following attributes:
+
+attribute | json data type | comments
+--- | --- | ---
+url | URI | URI to request more details
+origin | Object | start point of the proposed trip
+destination | Object | endpoint of the proposed trip
+trafficTypes | Array | list of traffic types used in the proposed trip. Currently: Bike, Bus, Car, CityTrain, Ferry, Metro, Other, RegioTrain, Unknown, Train, Tram, Walk, UBahn. trafficType Other is used in the segments for car rental/parking  
+description | String | 
+costs | Array | list of costs for the proposed trip
+useBikeSharing | Boolean | use bike sharing services for routing [default: false]
+useCarSharing | Boolean | use car sharing services for routing [default: false]
+--- | --- | ---
+ownVehicles | Object | 
+--- | --- | ---
+trafficType | Enum | Own vehicle type - Car / Bike
+useParking | Boolean | Use parking for own vehicle 
+useParkAndRide | Boolean | Use parking and ride for own vehicle 
+
+    
++ Model (application/json)
+
+    + Body
+    
+            [
+                {
+                    "url": "TripProposals/CarRouter/80844",
+                    "origin": {
+                        "location": {
+                            "latitude": 52.39419937133789,
+                            "longitude": 13.07367992401123,
+                            "system": "WGS_84"
+                        },
+                        "address": null,
+                        "time": "2014-03-27T13:04:40+0100"
+                    },
+                    "destination": {
+                        "location": {
+                            "latitude": 52.563589,
+                            "longitude": 13.319065,
+                            "system": "WGS_84"
+                        },
+                        "address": null,
+                        "time": "2014-03-27T14:48:09+0100"
+                    },
+                    "trafficTypes": [
+                        "Car"
+                    ],
+                    "description": null,
+                    "costs": {
+                        "distance": null,
+                        "duration": {
+                            "unit": "Second",
+                            "value": 5947.563361271776
+                        },
+                        "price": null,
+                        "emission": null,
+                        "ticketPrice": null
+                    }
+                }
+            ]
+
 # Group Billing
 This is a group of all rest resources related to IMP billing service.
 IMP offers this REST interface to its Partner (Service Providers and Mobility Providers) to provide billable events to IMP in order to use its billing functionality. Partners can provide events to IMP, but can't retrieve them.
