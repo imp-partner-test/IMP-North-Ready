@@ -12,14 +12,14 @@ This is a group of all journey planner Car Router related rest resources.
 ## List of Trip Proposals with Basic Info. Car Journey Planner [/imp-endpoint/api/V1/TripProposals/CarRouter] 
 
 This collection contains trip proposals for 1:n routing with basic information about tip costs (duration, price and distance) and an URL to request more details about the trip.
-Note: Start location is in all trip proposals the same, destination can be different (1:n routing)
+Note: start location is in all trip proposals the same, destination can be different (1:n routing)
 
 attribute | json data type | comments
 --- | --- | ---
 url | URI | URI to request more details about a specific route
 origin | Object | timed start point of the proposed trip
 destination | Object | timed endpoint of the proposed trip
-trafficTypes | Array | list of traffic types used in the proposed trip. Currently: Bike, Bus, Car, CityTrain, Ferry, Metro, Other, RegioTrain, Unknown, Train, Tram, Walk, UBahn. trafficType Other is used in the segments for car rental/parking  
+trafficTypes | Array | list of traffic types used in the proposed trip. Currently: Bike, Car, Walk, Other, Unknown. trafficType Other is used in the segments for car rental/parking  
 description | String | 
 costs | Array | list of costs for the proposed trip
 
