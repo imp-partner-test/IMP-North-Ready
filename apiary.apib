@@ -11,8 +11,7 @@ This is a group of all journey planner Car Router related rest resources.
             
 ## List of Trip Proposals with Basic Info. Car Journey Planner [/imp-endpoint/api/V1/TripProposals/CarRouter] 
 
-This collection contains trip proposals with basic information for specified trip criteria.
-The data structure of the response contains the following attributes:
+This collection contains trip proposals with information about tip duration, costs and distance.
 
 attribute | json data type | comments
 --- | --- | ---
@@ -22,8 +21,8 @@ destination | Object | endpoint of the proposed trip
 trafficTypes | Array | list of traffic types used in the proposed trip. Currently: Bike, Bus, Car, CityTrain, Ferry, Metro, Other, RegioTrain, Unknown, Train, Tram, Walk, UBahn. trafficType Other is used in the segments for car rental/parking  
 description | String | 
 costs | Array | list of costs for the proposed trip
-useBikeSharing | Boolean | use bike sharing services for routing [default: false]
-useCarSharing | Boolean | use car sharing services for routing [default: false]
+duration | String | minutes
+distance | String | kilometers
 --- | --- | ---
 ownVehicles | Object | 
 --- | --- | ---
@@ -224,7 +223,7 @@ Note: for internal IMP use only.
         
             userToken: {someTokenToCheckAuthentification} 
             
-+ Response 200 (application/json)
++ Response 200
 
     [BillableEvents Collection][]
 
@@ -456,7 +455,7 @@ Note: userToken is used to check the right to see billable events!
         
             userToken: {someTokenToCheckAuthentification} 
             
-+ Response 200 (application/json)
++ Response 200
 
     [Invoices Collection][]
 
