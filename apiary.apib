@@ -11,9 +11,9 @@ This is a group of all IMR one-to-many journey planning rest resources
 
 ## List of one-to-many Trip Proposals. Intermodal Router [/imp-endpoint/api/V1/TripProposals/IMR/one2many] 
 
+RESPONSE
 This collection contains list of trip proposals for one-to-many routing searches with information about tip costs (duration, price and distance). Accitionally an URL to access one selected one-to-one trip. 
-
-The data structure of collection contains a list of trip proposals. Each trip proposal includes the following attributes:
+Each trip proposal includes the following attributes:
 
 attribute | json data type | comments
 --- | --- | ---
@@ -25,7 +25,7 @@ description | String |
 costs | Array | list of costs for the proposed trip
 
 
-Some notes:
+Notes:
 - start location is in all trip proposals the same, destination is in every proposal different.
 - the trip proposals can be multimodal or intermodal, depending on which routing service the user is subscribed to.
     
@@ -99,7 +99,8 @@ Some notes:
 ### Getting one-to-many Trip Proposals by IMR Planner  [GET]
 @nottestable
 
-Search criteria for 1:n trip proposals is specified in the request body as described in the sample request below with the following attributes:
+REQUEST
+Search criterias for 1:n trip proposals is specified in the request body as described in the sample request below with the following attributes:
 
 - origin.  start point, list with one location in GEOJson format (addresses can be converted into geo locations by means of "GET /Resources/GeoLocations")
 - destination. end point. list with n locations in GEOJson Format
@@ -187,8 +188,8 @@ This is a group of all journey planner Car Router related rest resources.
             
 ## List of one-to-many Trip Proposals. Car Journey Planner [/imp-endpoint/api/V1/TripProposals/CarRouter/one2many] 
 
+REQUEST
 This collection contains trip proposals for 1:n routing with basic information about tip costs (duration, price and distance) and an URL to request more details about the trip.
-Note: start location is in all trip proposals the same, destination can be different (1:n routing)
 
 attribute | json data type | comments
 --- | --- | ---
@@ -199,6 +200,8 @@ trafficTypes | Array | list of traffic types used in the proposed trip. Currentl
 description | String | 
 costs | Array | list of costs for the proposed trip
 
+Notes
+- start location is in all trip proposals the same, destination can be different (1:n routing)
     
 + Model (application/json)
 
@@ -259,7 +262,8 @@ costs | Array | list of costs for the proposed trip
 ### Getting Trip Proposals from one location to n other locations by IMR Planner [GET]
 @nottestable
 
-Selection criteria is specified in the request body as described in the sample request:
+REQUEST
+Selection criteria is specified in the request body as described in the sample request using the following attributes:
 - origin: start point, list with one location in GEOJson format
 - destination: end point. list with n locations in GEOJson Format
 - time: time of departure or destination
