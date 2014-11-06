@@ -103,18 +103,20 @@ Notes:
 REQUEST:
 Search criterias for 1:n trip proposals is specified in the request body as described in the sample request below with the following attributes:
 
-- origin.  start point, list with one location in GEOJson format (addresses can be converted into geo locations by means of "GET /Resources/GeoLocations")
-- destination. end point. list with n locations in GEOJson Format
+- origin.  start point, one location in GEOJson format (addresses can be converted into geo locations by means of "GET /Resources/GeoLocations")
+- destination. end points. list with n locations in GEOJson Format
 - time. time of departure or destination
-- isDepartureTime | bool |  if true -> time = departure time, if false -> time = arrival time. default value is true.
-- viapoints | Array of Objects | list of geo locations that the route should use. optional
-- costfunctions | Array of Objects | list of cost factors, (such as Distance, Duration, Price, Emission), each with a percentual weight. Sample custfunction: {"costType":"Duration","percentage":"100"}
-- ownVehicles | Array of Objects | list of own vehicles which should be included into trip proposal calculation. Sample object value {"trafficType":"Car", "useParking":true,"useParkAndRide":false, "location":{"longitude":13.064472900000055,"latitude":52.3905689,"system":"WGS84"}}
-- userId | String | traveller id that requests a trip. Note: currently not used by IMP and can be any string
-- trafficTypes | Array | list of traffic types wich should be included into trip proposal calculation. Currently possible: Bike, Bus, Car, CityTrain, Ferry, Metro, Other, RegioTrain, Unknown, Train, Tram, Walk, UBahn. trafficType Other is used in the segments for car rental/parking
-- routingConstraints | Array of Objects | list of constraints to be taken into account for various traffic types, specified by min/max values. E.q. maximal distance in meters the traveller agrees to walk: {"routingConstraintType": "Distance", "trafficType": "Walk", "min": { "value": 0,"unit": "Meter" }, "max":{"value":600, "unit":"Meter"}}
-- useBikeSharing | Boolean | use bike sharing services for routing [default: false]
-- useCarSharing | Boolean | use car sharing services for routing [default: false]
+- isDepartureTime, bool, if true -> time = departure time, if false -> time = arrival time. default value is true.
+- trafficTypes, list of traffic types wich should be included into trip proposal calculation. Currently possible: Bike, Bus, Car, CityTrain, Ferry, Metro, Other, RegioTrain, Unknown, Train, Tram, Walk, UBahn. trafficType Other is used in the segments for car rental/parking
+- costfunctions, list of cost factors (the fastest, shortest cheapest route). Such as Distance, Duration, Price, Emission, each with a percentual weight. Sample custfunction: {"costType":"Duration","percentage":"100"}
+- routingConstraints, list of constraints to be taken into account for various traffic types, specified by min/max values. E.q. maximal distance in meters the traveller agrees to walk: {"routingConstraintType": "Distance", "trafficType": "Walk", "min": { "value": 0,"unit": "Meter" }, "max":{"value":600, "unit":"Meter"}}
+
+The following attributes are inherited from 1:1 IMR request. !Consider the redesign changes!
+- viapoints, Array of Objects, list of geo locations that the route should use. optional
+- ownVehicles, Array of Objects, list of own vehicles which should be included into trip proposal calculation. Sample object value {"trafficType":"Car", "useParking":true,"useParkAndRide":false, "location":{"longitude":13.064472900000055,"latitude":52.3905689,"system":"WGS84"}}
+- userId, String, traveller id that requests a trip. Note: currently not used by IMP and can be any string
+- useBikeSharing, Boolean, use bike sharing services for routing [default: false]
+- useCarSharing, Boolean, use car sharing services for routing [default: false]
 
 Notes:
 - IMR also provides routes in the past, but not for public transport
@@ -271,12 +273,13 @@ Selection criteria is specified in the request body as described in the sample r
 - destination: end point. list with n locations in GEOJson Format
 - time: time of departure or destination
 - isDepartureTime:  if true -> time = departure time, if false -> time = arrival time. default value is true.
-
-- viaPoints: list of geo locations that the route should use. optional
-- costFunction: list of cost factors (such as Distance, Duration, Price, Emission), each with a percentual weight. optional
+- costFunction: list of cost factors(the fastest, cheapest, shortest route) such as Distance, Duration, Price, Emission, each with a percentual weight. optional
 - routingConstraints: list of constraints to be taken into account for various traffic types, specified by min/max values. optional
+
+The following attributes are inherited from 1:1 CarRouter request. !Consider the redesign changes!
+- viaPoints: list of geo locations that the route should use. optional
 - userId: user that requests a trip. optional
-- more parameters from the classical Car Router request
+- more parameters..
 
 + Request
 
