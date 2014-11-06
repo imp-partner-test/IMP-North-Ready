@@ -12,8 +12,9 @@ This is a group of all IMR one-to-many journey planning rest resources
 ## List of one-to-many Trip Proposals. Intermodal Router [/imp-endpoint/api/V1/TripProposals/IMR/one2many] 
 
 RESPONSE
-This collection contains list of trip proposals for one-to-many routing searches with information about tip costs (duration, price and distance). Accitionally an URL to access one selected one-to-one trip. 
-Each trip proposal includes the following attributes:
+This collection contains list of trip proposals from one start point to n other end points (one-to-many) using IMR.
+Each trip proposal includes only information about tip costs (duration, price and distance), and additionally an URL to call one selected one-to-one trip. 
+Trip proposal attributes:
 
 attribute | json data type | comments
 --- | --- | ---
@@ -189,7 +190,10 @@ This is a group of all journey planner Car Router related rest resources.
 ## List of one-to-many Trip Proposals. Car Journey Planner [/imp-endpoint/api/V1/TripProposals/CarRouter/one2many] 
 
 REQUEST
-This collection contains trip proposals for 1:n routing with basic information about tip costs (duration, price and distance) and an URL to request more details about the trip.
+
+This collection contains list of trip proposals from one start point to n other end points (one-to-many) using the Car Router. Each trip proposal includes only information about tip costs (duration, price and distance),
+and additionally an URL to call one selected one-to-one trip. 
+Trip proposal attributes:
 
 attribute | json data type | comments
 --- | --- | ---
