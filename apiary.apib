@@ -40,9 +40,8 @@ Notes:
                 "origin": "timed start location in GEOJson Format",
                 "destination": "timed end location1 in GEOJson Format",
                 "trafficTypes": [
-                  "Walk",
                   "Car",
-                  "Bike"
+                  "Walk"
                 ],
                 "description": null,
                 "costs": {
@@ -107,16 +106,14 @@ Search criterias for 1:n trip proposals is specified in the request body as desc
 - destination. end points. list with n locations in GEOJson Format
 - time. time of departure or destination
 - isDepartureTime, bool, if true -> time = departure time, if false -> time = arrival time. default value is true.
-- trafficTypes, list of traffic types wich should be included into trip proposal calculation. Currently possible: Bike, Bus, Car, CityTrain, Ferry, Metro, Other, RegioTrain, Unknown, Train, Tram, Walk, UBahn. trafficType Other is used in the segments for car rental/parking
+- trafficTypes, list of traffic types wich should be included into trip proposal calculation. Possible values: {Walk, Car, Bike, PublicTransit, Bus, CityTrain, Metro, RegioTrain, Train, Tram, Ferry, "FreefloatingSharingBike", "StationbasedSharingBike", "OwnBike", "FreefloatingSharingCar", "StationbasedSharingCar", "OwnCar", Other, Unknown}. trafficType Other is used in the segments for car rental/parking
 - costfunctions, list of cost factors (the fastest, shortest cheapest route). Such as Distance, Duration, Price, Emission, each with a percentual weight. Sample custfunction: {"costType":"Duration","percentage":"100"}
 - routingConstraints, list of constraints to be taken into account for various traffic types, specified by min/max values. E.q. maximal distance in meters the traveller agrees to walk: {"routingConstraintType": "Distance", "trafficType": "Walk", "min": { "value": 0,"unit": "Meter" }, "max":{"value":600, "unit":"Meter"}}
 
 The following attributes are inherited from 1:1 IMR request. !Consider the redesign changes!
 - viapoints, Array of Objects, list of geo locations that the route should use. optional
-- ownVehicles, Array of Objects, list of own vehicles which should be included into trip proposal calculation. Sample object value {"trafficType":"Car", "useParking":true,"useParkAndRide":false, "location":{"longitude":13.064472900000055,"latitude":52.3905689,"system":"WGS84"}}
+- ownVehicles, Array of Objects, list of own vehicles which should be included into trip proposal calculation. Sample {"trafficType":"Car", "useParking":  , "useParkAndRide":.., "location":.., "costs"..}
 - userId, String, traveller id that requests a trip. Note: currently not used by IMP and can be any string
-- useBikeSharing, Boolean, use bike sharing services for routing [default: false]
-- useCarSharing, Boolean, use car sharing services for routing [default: false]
 
 Notes:
 - IMR also provides routes in the past, but not for public transport
@@ -151,8 +148,7 @@ Notes:
               "trafficTypes": [
                 "Walk",
                 "Bike",
-                "Car",
-                "Metro"
+                "Car"
               ],
               "routingConstraints": [
                 {
@@ -172,12 +168,11 @@ Notes:
                   }
                 }
              ],
-             "useBikeSharing": "true",
-             "useCarSharing": "true", 
              "ownVehicles":[
                             {  "trafficType":"Car",
                                 "useParking":"true",
-                                "useParkAndRide":"true"
+                                "useParkAndRide":"true",
+                                "costs":[]
                             }
                         ]
             }
@@ -201,9 +196,9 @@ attribute | json data type | comments
 url | URI | URI to request more details about a specific route
 origin | Object | timed start point of the proposed trip
 destination | Object | timed endpoint of the proposed trip
-trafficTypes | Array | list of traffic types used in the proposed trip. Currently: Car, Walk. 
+trafficTypes | Array | list of traffic types used in the proposed trip. Currently possible: Car, Walk, Transit, Bike
 description | String | 
-costs | Array | list of costs for the proposed trip
+costs | Array | list of costs for the proposed trip. optional
 
 Notes
 - start location is in all trip proposals the same, destination can be different (1:n routing)
